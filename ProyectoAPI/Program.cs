@@ -46,8 +46,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddTransient<JwtTokenGenerator>();
 builder.Services.AddTransient<ItesrcneActividadesContext>();
-
-builder.Services.AddTransient(typeof(IRepository<>));
+builder.Services.AddTransient<DepartamentosRepository>();
+// builder.Services.AddTransient(typeof(IRepository<>));
 
 var app = builder.Build();
 
