@@ -19,14 +19,15 @@ namespace ProyectoAPI.Helpers
         }
         public string GetToken(Departamentos depa)
         {
-            List<Claim> claims = new();
-
-            claims.Add(new Claim(ClaimTypes.Name, depa.Nombre));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, jwtModel.Subject));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Aud, jwtModel.Audience));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()));
-            // claims.Add(new Claim(JwtRegisteredClaimNames.Exp, DateTime.Now.AddMinutes(20).ToString()));
-            claims.Add(new Claim("id", depa.Id.ToString()));
+            List<Claim> claims =
+            [
+                new Claim(ClaimTypes.Name, depa.Nombre),
+                new Claim(JwtRegisteredClaimNames.Sub, jwtModel.Subject),
+                new Claim(JwtRegisteredClaimNames.Aud, jwtModel.Audience),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()),
+                // claims.Add(new Claim(JwtRegisteredClaimNames.Exp, DateTime.Now.AddMinutes(20).ToString()));
+                new Claim("id", depa.Id.ToString()),
+            ];
 
             JwtSecurityTokenHandler handler = new();
 

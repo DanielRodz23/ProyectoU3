@@ -2,7 +2,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ProyectoAPI.Controllers.Repositories;
 using ProyectoAPI.Helpers;
 using ProyectoAPI.Models.Entities;
 using ProyectoAPI.Repositories;
@@ -44,10 +43,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     x.TokenValidationParameters = tknValidationParameters;
 });
 
+//Automapper como servicio
+builder.Services.AddAutoMapper(typeof(Program));
+
+//Servicios
 builder.Services.AddTransient<JwtTokenGenerator>();
 builder.Services.AddTransient<ItesrcneActividadesContext>();
 builder.Services.AddTransient<DepartamentosRepository>();
-// builder.Services.AddTransient(typeof(IRepository<>));
+builder.Services.AddTransient<ActividadesRepository>();
+// builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 
@@ -60,8 +64,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
