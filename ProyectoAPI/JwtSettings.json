@@ -1,0 +1,8 @@
+{
+    "Jwt":{
+      "Key":"sPrkvtaqLEdYICLObnLgUqjtspnakwndlakwndakwd",
+      "Issuer":"http://localhost:5285",
+      "Audience":"http://localhost:5285",
+      "Subject":"ProyectoApi"
+    }
+  }
