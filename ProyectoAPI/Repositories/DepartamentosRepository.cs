@@ -14,6 +14,7 @@ namespace ProyectoAPI.Repositories
         }
         public async Task<Departamentos?> LoginDepartamento(string user, string password)
         {
+
             return ctx.Departamentos.Where(x=>x.Username == user && x.Password == password).FirstOrDefault();
         }
     }

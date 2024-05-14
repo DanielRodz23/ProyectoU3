@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoAPI.Models.DTOs;
+using ProyectoAPI.Models.Entities;
 using ProyectoAPI.Repositories;
 
 namespace ProyectoAPI.Controllers
@@ -38,6 +39,15 @@ namespace ProyectoAPI.Controllers
             var myBorrador = await actividadesRepository.GetMyBorradorAsync(currentUser.Id);
             var borradorMapd = mapper.Map<IEnumerable<ActividadesDTO>>(myBorrador);
             return Ok(borradorMapd);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostActividad(ActividadesDTO actividadesDTO)
+        {
+            var context = HttpContext;
+            actividadesDTO.Id = 0;
+            var actividades = mapper.Map<Actividades>(actividadesDTO);
+
+            return Ok();
         }
     }
 }

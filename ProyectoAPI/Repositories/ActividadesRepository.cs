@@ -19,8 +19,11 @@ namespace ProyectoAPI.Repositories
             return ctx.Actividades.Include(x=>x.IdDepartamentoNavigation).Where(x => x.IdDepartamentoNavigation.IdSuperior>=idsuperior && x.Estado==2).OrderByDescending(x=>x.FechaCreacion);
         }
         public async Task<IEnumerable<Actividades>> GetMyBorradorAsync(int idUser){
-            var query = ctx.Departamentos.Include(x=>x.Actividades).Where(x=>x.Id==idUser).Select(x=>x.Actividades.Where(e=>e.Estado==1));
-            return (IEnumerable<Actividades>)query;
+            var query = ctx.Departamentos
+                .Include(x=>x.Actividades)
+                .Where(x=>x.Id==idUser)
+                .Select(x=>x.Actividades.Where(e=>e.Estado==1).First());
+            return query;
         }
     }
 }
