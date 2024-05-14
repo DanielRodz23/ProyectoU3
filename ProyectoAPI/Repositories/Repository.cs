@@ -6,7 +6,7 @@ using ProyectoAPI.Models.Entities;
 
 namespace ProyectoAPI.Controllers.Repositories
 {
-    public class Repository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
 
         public ItesrcneActividadesContext ctx;

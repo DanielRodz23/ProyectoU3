@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ProyectoAPI.Controllers.Repositories;
 using ProyectoAPI.Helpers;
 using ProyectoAPI.Models.Entities;
 using ProyectoAPI.Repositories;
@@ -45,7 +46,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddTransient<JwtTokenGenerator>();
 builder.Services.AddTransient<ItesrcneActividadesContext>();
-builder.Services.AddTransient<DepartamentosRepository>();
+
+builder.Services.AddTransient(typeof(IRepository<>));
 
 var app = builder.Build();
 
