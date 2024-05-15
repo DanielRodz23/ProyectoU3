@@ -4,12 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProyectoU3"
+    xmlns:views="clr-namespace:ProyectoU3.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="ProyectoU3">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:login}"
-        Route="login" />
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="LoginView" />
 
 </Shell>
