@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using ProyectoU3.Services;
+using ProyectoU3.ViewModels;
+using ProyectoU3.Views;
 
 namespace ProyectoU3
 {
@@ -14,6 +17,18 @@ namespace ProyectoU3
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            //Servicios
+            HttpClient client = new HttpClient() { BaseAddress = new Uri("https://doubledapi.labsystec.net/") };
+            builder.Services.AddSingleton(client);
+            builder.Services.AddTransient<LoginClient>();
+
+            builder.Services.AddSingleton<LoginView>();
+            builder.Services.AddSingleton<LoginViewModel>();
+
+            builder.Services.AddSingleton<ActividadesService>();
+            builder.Services.AddTransient<ListActividadesViewModel>();
+            builder.Services.AddTransient <ListActividadesView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

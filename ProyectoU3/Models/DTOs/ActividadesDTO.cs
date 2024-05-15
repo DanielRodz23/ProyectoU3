@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace ProyectoAPI.Models.DTOs
+namespace ProyectoU3.Models.DTOs
 {
     public class ActividadesDTO
     {
@@ -22,6 +23,8 @@ namespace ProyectoAPI.Models.DTOs
         public DateTime FechaActualizacion { get; set; }
 
         public int Estado { get; set; }
+
         public string Departamento { get; set; } = null!;
+
     }
 }
