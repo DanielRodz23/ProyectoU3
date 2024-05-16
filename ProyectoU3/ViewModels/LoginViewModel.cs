@@ -10,15 +10,34 @@ using System.Threading.Tasks;
 
 namespace ProyectoU3.ViewModels
 {
-    public partial class LoginViewModel(LoginClient loginClient) : ObservableObject
+    public partial class LoginViewModel : ObservableObject
     {
-        private readonly LoginClient loginClient = loginClient;
+        public LoginViewModel(LoginClient loginClient)
+        {
+            this.loginClient = loginClient;
+            CheckTkn();
+        }
         [ObservableProperty]
         string username;
         [ObservableProperty]
         string password;
         [ObservableProperty]
         string error;
+        private readonly LoginClient loginClient;
+        async void CheckTkn()
+        {
+            var tkn = await SecureStorage.GetAsync("tkn");
+            if (tkn == null) return;
+            var Valido = await loginClient.Validar(tkn);
+            if (Valido)
+            {
+                await Shell.Current.GoToAsync("//ListaActividadesView");
+            }
+            else
+            {
+                SecureStorage.RemoveAll();
+            }
+        }
         [RelayCommand]
         async void Login()
         {
@@ -29,7 +48,7 @@ namespace ProyectoU3.ViewModels
                 else
                 {
                     await SecureStorage.SetAsync("tkn", token);
-                    await Shell.Current.GoToAsync("");
+                    await Shell.Current.GoToAsync("//ListaActividadesView");
                 }
             }
             else

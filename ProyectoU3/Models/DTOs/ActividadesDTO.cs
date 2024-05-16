@@ -8,23 +8,23 @@ namespace ProyectoU3.Models.DTOs
 {
     public class ActividadesDTO
     {
-        public int Id { get; set; }
+        public int id { get; set; }
 
-        public string Titulo { get; set; } = null!;
+        public string titulo { get; set; } = null!;
 
-        public string? Descripcion { get; set; }
+        public string? descripcion { get; set; }
 
-        public DateOnly? FechaRealizacion { get; set; }
+        public DateOnly? fechaRealizacion { get; set; }
 
-        public int IdDepartamento { get; set; }
+        public int idDepartamento { get; set; }
 
-        public DateTime FechaCreacion { get; set; }
+        public DateTime fechaCreacion { get; set; }
 
-        public DateTime FechaActualizacion { get; set; }
+        public DateTime fechaActualizacion { get; set; }
 
-        public int Estado { get; set; }
+        public int estado { get; set; }
 
-        public string Departamento { get; set; } = null!;
+        public string departamento { get; set; } = null!;
 
     }
 }

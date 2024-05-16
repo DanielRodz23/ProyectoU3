@@ -12,5 +12,14 @@
         Title="Home"
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="LoginView" />
+    
+    <ShellContent
+        Title="Lista de actividades"
+        ContentTemplate="{DataTemplate views:ListActividadesView}"
+        Route="ListaActividadesView"/>
 
+    <ShellContent
+        Title="Agregar una actividad"
+        ContentTemplate="{DataTemplate views:AgregarActividadView}"
+        Route="AgregarActividadView"/>
 </Shell>

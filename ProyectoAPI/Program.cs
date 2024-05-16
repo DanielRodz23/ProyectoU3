@@ -36,7 +36,6 @@ var tknValidationParameters = new TokenValidationParameters
     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtconfig["Jwt:Key"]))
 };
 
-builder.Services.AddSingleton(tknValidationParameters);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(x=>{
@@ -51,6 +50,8 @@ builder.Services.AddTransient<JwtTokenGenerator>();
 builder.Services.AddTransient<ItesrcneActividadesContext>();
 builder.Services.AddTransient<DepartamentosRepository>();
 builder.Services.AddTransient<ActividadesRepository>();
+builder.Services.AddSingleton(tknValidationParameters);
+
 // builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();

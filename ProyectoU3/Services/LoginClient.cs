@@ -21,5 +21,11 @@ namespace ProyectoU3.Services
             }
             return null;
         }
+        public async Task<bool> Validar(string token)
+        {
+            var response  = await client.GetAsync($"api/login/{token}");
+            if (response.IsSuccessStatusCode) return true;
+            return false;
+        }
     }
 }

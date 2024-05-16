@@ -14,7 +14,15 @@ namespace ProyectoU3.Helpers
         public static string ListaActividadesUri { get { return "api/Actividades"; } }
         //POST: Para agregar una lista 
         public static string InsertActividadUri { get { return "api/Actividades"; } }
+        //PUT:  Para actualizar una actividad
+        public static string UpdateActividadUri { get { return "api/Actividades"; } }
+
         //GET:  Para obtener una lista de actividades en borrador
-        public static string GetAllBorradores { get { return "api/Actividades/GetMyBorrador"; } }
+        public static string GetAllBorradoresUri { get { return "api/Actividades/GetMyBorradores"; } }
+        //GET:  Para traer una actividad en especifico ya sea borrador o actividad
+        public static string ActividadConcatenarUri { get { return "api/Actividades/GetActividadOrBorrador/"; } }
+
+        //POST: Para agregar un departamento
+        public static string InsertDepartamentoUri { get { return "api/Departamentos"; } }
     }
 }

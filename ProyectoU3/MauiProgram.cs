@@ -28,7 +28,7 @@ namespace ProyectoU3
 
             builder.Services.AddSingleton<ActividadesService>();
             builder.Services.AddTransient<ListActividadesViewModel>();
-            builder.Services.AddTransient <ListActividadesView>();
+            builder.Services.AddTransient<ListActividadesView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

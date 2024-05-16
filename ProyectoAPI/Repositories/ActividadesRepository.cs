@@ -15,7 +15,9 @@ namespace ProyectoAPI.Repositories
         }
         public async Task<IEnumerable<Actividades>> GetAllActividadesPublicadasAsync(int? idsuperior){
             if (idsuperior == null)
-                return ctx.Actividades.Include(x => x.IdDepartamentoNavigation).Where(x=>x.Estado==2).OrderByDescending(x=>x.FechaCreacion);
+            {
+                return ctx.Actividades.Include(x => x.IdDepartamentoNavigation).Where(x => x.Estado == 2).OrderByDescending(x => x.FechaCreacion);
+            }
             return ctx.Actividades.Include(x=>x.IdDepartamentoNavigation).Where(x => x.IdDepartamentoNavigation.IdSuperior>=idsuperior && x.Estado==2).OrderByDescending(x=>x.FechaCreacion);
         }
         public async Task<IEnumerable<Actividades>> GetMyBorradorAsync(int idUser){

@@ -6,7 +6,7 @@ public partial class ListActividadesView : ContentPage
 {
 	public ListActividadesView(ListActividadesViewModel viewModel)
 	{
-		BindingContext = viewModel;
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 }
