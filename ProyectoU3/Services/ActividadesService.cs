@@ -25,5 +25,12 @@ namespace ProyectoU3.Services
             }
             return null;
         }
+        public async Task<bool> InsertarActividad(string token, ActividadesDTO actividad)
+        {
+            var rm = new HttpRequestMessage() { RequestUri = new Uri(client.BaseAddress + ApiUriHelper.InsertActividadUri), Method = HttpMethod.Post };
+            rm.Headers.Add("Authorization", $"Bearer {token}");
+            var response = await client.SendAsync(rm);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

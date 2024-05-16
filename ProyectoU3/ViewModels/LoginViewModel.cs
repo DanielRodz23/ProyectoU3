@@ -16,6 +16,7 @@ namespace ProyectoU3.ViewModels
         {
             this.loginClient = loginClient;
             CheckTkn();
+            IsEnabled = true;
         }
         [ObservableProperty]
         string username;
@@ -23,6 +24,8 @@ namespace ProyectoU3.ViewModels
         string password;
         [ObservableProperty]
         string error;
+        [ObservableProperty]
+        bool isEnabled;
         private readonly LoginClient loginClient;
         async void CheckTkn()
         {
@@ -41,6 +44,7 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         async void Login()
         {
+            IsEnabled = false;
             if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
             {
                 var token = await loginClient.GetToken(new LoginModel { username = Username, password = Password });
@@ -55,7 +59,7 @@ namespace ProyectoU3.ViewModels
             {
                 Error = "Llenar campos";
             }
-
+            IsEnabled = true;
         }
     }
 }

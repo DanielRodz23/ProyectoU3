@@ -20,6 +20,12 @@
                 WidthRequest="200" 
                 HorizontalOptions="Center" 
                 VerticalOptions="Center" 
+                IsEnabled="{Binding IsEnabled}"
                 Command="{Binding LoginCommand}"/>
+
+        <Label Text="{Binding Error}"
+               HorizontalOptions="Center"
+               TextColor="Red"
+               />
     </VerticalStackLayout>
 </ContentPage>
