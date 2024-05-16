@@ -7,7 +7,9 @@
     xmlns:views="clr-namespace:ProyectoU3.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="ProyectoU3">
-
+    
+    
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:LoginView}"
