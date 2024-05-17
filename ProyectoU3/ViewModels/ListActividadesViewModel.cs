@@ -41,6 +41,11 @@ namespace ProyectoU3.ViewModels
         {
             Shell.Current.GoToAsync("//AgregarActividadView");
         }
+        [RelayCommand]
+        void AgregarDepartamento()
+        {
+
+        }
 
     }
 }

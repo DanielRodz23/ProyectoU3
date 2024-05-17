@@ -24,7 +24,7 @@ namespace ProyectoAPI.Controllers
             if (idUsuario == null) return BadRequest();
             var currentUser = departamentosRepository.Get(int.Parse(idUsuario.Value));
             if (currentUser == null) return NotFound();
-            var actividades = await actividadesRepository.GetAllActividadesPublicadasAsync(currentUser.IdSuperior);
+            var actividades = await actividadesRepository.GetAllActividadesPublicadasAsync(currentUser.Id);
             var actividadesDTO = mapper.Map<IEnumerable<ActividadesDTO>>(actividades);
             return Ok(actividadesDTO);
         }

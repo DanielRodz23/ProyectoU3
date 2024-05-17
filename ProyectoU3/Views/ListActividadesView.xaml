@@ -71,7 +71,7 @@
                 Padding="0,-28,0,0"
                 FontSize="80"
                 Command="{Binding AgregarCommand}"
-                TranslationY="-100"
+                x:Name="ActButton"
                 />
         <Button HeightRequest="60"
                 WidthRequest="60"
@@ -81,6 +81,8 @@
                 Text="+"
                 Padding="0,-28,0,0"
                 FontSize="80"
+                x:Name="DepButton"
+                Command="{Binding AgregarDepartamentoCommand}"
                 />
 
         <Button HeightRequest="60"
@@ -91,6 +93,8 @@
                 Text="+"
                 Padding="0,-28,0,0"
                 FontSize="80"
+                Clicked="Button_Clicked"
+                x:Name="ShowButton"
                 />
     </Grid>
 </ContentPage>
