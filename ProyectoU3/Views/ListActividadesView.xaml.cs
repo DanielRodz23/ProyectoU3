@@ -16,7 +16,7 @@ public partial class ListActividadesView : ContentPage
 		ShowButton.IsEnabled = false;
         if (!Showed)
         {
-            ActButton.TranslateTo(ActButton.tra)
+			//ActButton.TranslateTo(ActButton.TranslationX);
         }
 
     }
