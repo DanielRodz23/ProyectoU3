@@ -11,7 +11,7 @@
 
         <Label Text="Inicar sesión" FontSize="30" HorizontalOptions="Center"/>
 
-        <Entry Text="{Binding Username}" Placeholder="usuario" HorizontalTextAlignment="Center"/>
+        <Entry Text="{Binding Username}" Placeholder="usuario@realmail.com" HorizontalTextAlignment="Center"/>
 
         <Entry Text="{Binding Password}" Placeholder="contraseña" IsPassword="True"  HorizontalTextAlignment="Center" />
 
