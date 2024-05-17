@@ -53,6 +53,7 @@ builder.Services.AddTransient<ItesrcneActividadesContext>();
 builder.Services.AddTransient<DepartamentosRepository>();
 builder.Services.AddTransient<ActividadesRepository>();
 builder.Services.AddSingleton(tknValidationParameters);
+//builder.Services.AddSingleton<IWebHostEnvironment>();
 
 // builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
@@ -66,6 +67,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
