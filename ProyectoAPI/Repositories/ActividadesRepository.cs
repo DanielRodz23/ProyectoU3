@@ -25,7 +25,16 @@ namespace ProyectoAPI.Repositories
             var idSuperior = userActual.IdSuperior;
             if (idSuperior != null)
             {
-                var ActividadesBros = ctx.Departamentos.Include(x=>x.InverseIdSuperiorNavigation).ThenInclude(x=>x.Actividades).Where(x=>x.Id==idSuperior).Select(x=>x.InverseIdSuperiorNavigation).First().Select(x=>x.Actividades).SelectMany(c=>c);
+                var ActividadesBros = 
+                    ctx.Departamentos
+                    .Include(x=>x.InverseIdSuperiorNavigation)
+                    .ThenInclude(x=>x.Actividades)
+                    .Where(x=>x.Id==idSuperior)
+                    .Select(x=>x.InverseIdSuperiorNavigation.Where(y=>y.Id!=id))
+                    .SelectMany(x=>x)
+                    .Select(x => x.Actividades)
+                    .SelectMany(c => c)
+                    ;
                 listactividades.AddRange(ActividadesBros);
 
             }
