@@ -18,6 +18,7 @@ namespace ProyectoAPI.Controllers
     {
         private readonly DepartamentosRepository departamentosRepository = departamentosRepository;
         private readonly IMapper mapper = mapper;
+
         [HttpPost]
         public async Task<IActionResult> PostDepartamento(DepartamentosDTO departamentoDTO)
         {

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoAPI.Helpers;
 using ProyectoAPI.Models.DTOs;
 using ProyectoAPI.Models.Entities;
 using ProyectoAPI.Repositories;
@@ -37,7 +38,7 @@ namespace ProyectoAPI.Controllers
 
             var activ = actividadesRepository.Get(id);
             if (activ == null) return NotFound();
-            if (activ.IdDepartamento!=int.Parse(idUsuario.Value))
+            if (activ.IdDepartamento != int.Parse(idUsuario.Value))
             {
                 return Forbid();
             }
@@ -45,13 +46,14 @@ namespace ProyectoAPI.Controllers
             return Ok(actDto);
         }
         [HttpGet("GetMyBorradores")]
-        public async Task<IActionResult> GetMyBorradores(){
+        public async Task<IActionResult> GetMyBorradores()
+        {
             var context = HttpContext;
             var idUsuario = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
             if (idUsuario == null) return BadRequest();
             var currentUser = departamentosRepository.Get(int.Parse(idUsuario.Value));
             //Si el usuario no existe
-            if (currentUser==null) return NotFound();
+            if (currentUser == null) return NotFound();
             var myBorrador = await actividadesRepository.GetMyBorradorAsync(currentUser.Id);
             var borradorMapd = mapper.Map<IEnumerable<ActividadesDTO>>(myBorrador);
             return Ok(borradorMapd);
@@ -60,8 +62,8 @@ namespace ProyectoAPI.Controllers
         public async Task<IActionResult> PostActividad(ActividadesDTO actividadesDTO)
         {
             var context = HttpContext;
-            var claimTkn = User.Identities.SelectMany(x=>x.Claims).FirstOrDefault(x => x.Type=="id");
-            if (claimTkn==null) return BadRequest();
+            var claimTkn = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
+            if (claimTkn == null) return BadRequest();
             var id = int.Parse(claimTkn.Value);
             actividadesDTO.Id = 0;
             actividadesDTO.IdDepartamento = id;
@@ -75,26 +77,47 @@ namespace ProyectoAPI.Controllers
         public async Task<ActionResult> UpdateActividad(ActividadesDTO actividadesDTO)
         {
             //Teoricamente es para agregar una actividad que ya estaba como borrador
-            
+
             var actividad = actividadesRepository.Get(actividadesDTO.Id);
-            if (actividad==null) return BadRequest();
-            
+            if (actividad == null) return BadRequest();
+
             var context = HttpContext;
-            var claimtkn = User.Identities.SelectMany(x=>x.Claims).FirstOrDefault(x=>x.Type=="id");
-            if (claimtkn==null) return BadRequest();
+            var claimtkn = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
+            if (claimtkn == null) return BadRequest();
 
             actividad.Titulo = actividadesDTO.Titulo;
             actividad.Descripcion = actividadesDTO.Descripcion;
             actividad.FechaRealizacion = actividadesDTO.FechaRealizacion;
             actividad.Estado = actividadesDTO.Estado;
-            if (actividad.Estado==2) actividad.FechaCreacion = DateTime.UtcNow;
-            else {actividad.FechaCreacion = actividadesDTO.FechaCreacion; }
+            if (actividad.Estado == 2) actividad.FechaCreacion = DateTime.UtcNow;
+            else { actividad.FechaCreacion = actividadesDTO.FechaCreacion; }
 
             //TODO validar
             actividad.IdDepartamento = int.Parse(claimtkn.Value);
             actividadesRepository.Update(actividad);
             return Ok();
-            
+
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            //Traer usuario
+            var context = HttpContext;
+            var claimtkn = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
+            if (claimtkn == null) return BadRequest();
+            var usr = departamentosRepository.Get(claimtkn.Value);
+            if (usr == null) return BadRequest();
+
+
+            if (usr.Actividades.Any(x => x.Id == id))
+            {
+                var activ = actividadesRepository.Get(id);
+                activ.Estado = (int)Estado.Eliminado;
+                actividadesRepository.Update(activ);
+                return Ok();
+            }
+            return NotFound();
         }
 
     }

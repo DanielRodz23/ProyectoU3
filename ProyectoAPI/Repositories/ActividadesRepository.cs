@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using ProyectoAPI.Controllers.Repositories;
+using ProyectoAPI.Helpers;
 using ProyectoAPI.Models.Entities;
 
 namespace ProyectoAPI.Repositories
@@ -51,7 +52,7 @@ namespace ProyectoAPI.Repositories
             var query = ctx.Departamentos
                 .Include(x => x.Actividades)
                 .Where(x => x.Id == idUser)
-                .Select(x => x.Actividades.Where(e => e.Estado == 1).First());
+                .Select(x => x.Actividades.Where(e => e.Estado == (int)Estado.Borrador).First());
             return query;
         }
     }

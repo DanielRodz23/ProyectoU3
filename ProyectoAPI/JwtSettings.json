@@ -1,8 +1,8 @@
 {
   "Jwt": {
     "Key": "sPrkvtaqLEdYICLObnLgUqjtspnakwndlakwndakwd",
-    "Issuer": "http://localhost:5285/",
-    "Audience": "http://localhost:5285/",
+    "Issuer": "https://doubledapi.labsystec.net/",
+    "Audience": "https://doubledapi.labsystec.net/",
     "Subject": "ProyectoApi"
   }
 }

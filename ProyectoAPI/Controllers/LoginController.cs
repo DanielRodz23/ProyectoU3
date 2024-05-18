@@ -35,7 +35,7 @@ namespace ProyectoAPI.Controllers
             var tkn = tokenGenerator.GetToken(depa);
             return Ok(tkn);
         }
-        [HttpGet("/{token}")]
+        [HttpGet("{token}")]
         public async Task<IActionResult> Validar(string token)
         {
             JwtSecurityTokenHandler TokenHandler = new ();

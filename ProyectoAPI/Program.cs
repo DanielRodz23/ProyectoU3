@@ -54,6 +54,8 @@ builder.Services.AddTransient<DepartamentosRepository>();
 builder.Services.AddTransient<ActividadesRepository>();
 builder.Services.AddSingleton(tknValidationParameters);
 
+builder.Services.AddControllersWithViews();
+
 // builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
