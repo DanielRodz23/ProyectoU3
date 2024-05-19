@@ -3,11 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProyectoU3.Views.VerBorradorView"
              Title="VerBorradorView">
-    <VerticalStackLayout>
+    <Grid>
         <!--aqui borre todo porque me daba error-->
+        <CollectionView ItemsSource="{Binding}">
+            
+            <!--<CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                    <x:String>test</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>-->
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate >
+                    <Frame Margin="10">
+                        <Grid ColumnDefinitions=".7*, .3*"
+                   RowDefinitions="60, 30, Auto, Auto ">
+                            <Label Text="{Binding titulo}"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        FontSize="Large"
+                        MaxLines="1"
+                        LineBreakMode="TailTruncation"/> 
+
+
+                           
+                         
+                            
+                            
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button HeightRequest="60"
+        WidthRequest="160"
+        VerticalOptions="End"
+        HorizontalOptions="End"
+        Margin="0,0,50,50"
+        Text="Editar"
+        Padding="0,-28,0,0"
+        FontSize="40"
         
+        />
 
-
-            <Button Text="Publicar"></Button> 
-    </VerticalStackLayout>
+            <!--<Button Text="Publicar"></Button>--> 
+    </Grid>
 </ContentPage>

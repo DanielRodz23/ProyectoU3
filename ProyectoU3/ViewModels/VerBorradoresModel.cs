@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProyectoU3.ViewModels
 {
-    internal class VerBorradoresModel
+    public partial class VerBorradoresModel : ObserbableObject
     {
+        //no se que sigue aqui, me daba errores 
+        public VerBorradoresModel()
+        {
+
+
+        }
     }
 }
