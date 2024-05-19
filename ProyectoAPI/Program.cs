@@ -44,6 +44,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     x.TokenValidationParameters = tknValidationParameters;
 });
 
+builder.Services.AddControllersWithViews();
+
 //Automapper como servicio
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -54,8 +56,6 @@ builder.Services.AddTransient<DepartamentosRepository>();
 builder.Services.AddTransient<ActividadesRepository>();
 builder.Services.AddSingleton(tknValidationParameters);
 //builder.Services.AddSingleton<IWebHostEnvironment>();
-
-builder.Services.AddControllersWithViews();
 
 // builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
@@ -71,6 +71,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.MapDefaultControllerRoute();
 
 app.UseAuthentication();
 app.UseAuthorization();

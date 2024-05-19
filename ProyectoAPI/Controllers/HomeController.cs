@@ -4,8 +4,7 @@ namespace ProyectoAPI.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
-        [Route("/")]
+        [HttpGet("/")]
         public IActionResult Index()
         {
             return View();

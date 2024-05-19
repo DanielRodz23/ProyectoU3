@@ -5,12 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProyectoU3"
     xmlns:views="clr-namespace:ProyectoU3.Views"
+    xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
     Shell.FlyoutBehavior="Disabled"
+    x:DataType="{x:Type vm:ShellViewModel}"
     Title="ProyectoU3">
-    
-    
-    
-    <ShellContent
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesion" Order="Primary" Command="{Binding CerrarSesionCommand}"></ToolbarItem>
+    </Shell.ToolbarItems>   
+
+<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="LoginView" />
@@ -18,6 +21,7 @@
     <ShellContent
         Title="Lista de actividades"
         ContentTemplate="{DataTemplate views:ListActividadesView}"
+        x:Name="ListaActividadesView"
         Route="ListaActividadesView"/>
 
     <ShellContent

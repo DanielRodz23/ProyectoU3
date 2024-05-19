@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -23,9 +24,10 @@ namespace ProyectoU3.Services
         }
         public async Task<bool> Validar(string token)
         {
-            var response  = await client.GetAsync($"api/login/{token}");
-            if (response.IsSuccessStatusCode) return true;
-            return false;
+            var hdrs = client.DefaultRequestHeaders;
+            var response = await client.PostAsync("api/Login/Validator", new StringContent(JsonSerializer.Serialize(new { token = token }), Encoding.UTF8, "application/json"));
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

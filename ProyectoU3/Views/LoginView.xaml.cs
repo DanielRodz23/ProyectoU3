@@ -9,6 +9,6 @@ public partial class LoginView : ContentPage
 
 		InitializeComponent();
 		this.BindingContext = viewModel;
-
+		Shell.Current.ToolbarItems.First().IsEnabled = false;
 	}
 }

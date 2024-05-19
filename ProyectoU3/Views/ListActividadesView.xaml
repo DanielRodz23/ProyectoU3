@@ -4,7 +4,7 @@
              x:Class="ProyectoU3.Views.ListActividadesView"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
-             Title="ListActividadesView"
+             Title="Inicio"
              x:DataType="{x:Type vm:ListActividadesViewModel}">
     <Grid>
         <CollectionView ItemsSource="{Binding ListaActividades}">
@@ -95,6 +95,7 @@
                 FontSize="80"
                 Clicked="Button_Clicked"
                 x:Name="ShowButton"
+                IsVisible="Collapse"
                 />
     </Grid>
 </ContentPage>
