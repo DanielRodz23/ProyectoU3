@@ -13,6 +13,23 @@ namespace ProyectoU3.ViewModels
 {
     public partial class AgregarActividadViewModel : ObservableObject
     {
+        //hola espero no regarla
+        //aguas con esto jaja
+        private async void OncouterClicked(object sender, EventArgs e)
+        {
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle="Agregar Imagen",
+                FileTypes=FilePickerFileType.Images
+            });
+            if (result == null)
+                return;
+
+            var stream = await result.OpenReadAsync();
+        }
+
+
+
         private readonly ActividadesService actividadesService;
 
         public AgregarActividadViewModel(ActividadesService actividadesService)

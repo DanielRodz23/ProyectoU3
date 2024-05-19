@@ -15,7 +15,11 @@
 
         <Entry Placeholder="Descripcion de la actividad"></Entry>
         <Label></Label>
-
+        
+        <!--editar el adroid manifest.xalm read_external_storage-->
+        <Button Text="Agregar Imagen" ></Button>
+        
+        
         <Button Text="Agegar"></Button>
 
         <Button Text="Guardar como Borrador"></Button>
