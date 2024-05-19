@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoU3.Views.VerDetallesActividadView"
+             xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
+             xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
+             Title="VerDetallesActividadView"
+             x:DataType="{x:Type vm:DetallesViewModel}">
+    <VerticalStackLayout>
+        <Label Text="{Binding ActividadesDTO.titulo}"></Label>
+        <Label Text="{Binding ActividadesDTO.fechaRealizacion}"></Label>
+        <Label Text="{Binding ActividadesDTO.departamento}"></Label>
+        <Label Text="{Binding ActividadesDTO.descripcion}"></Label>
+        <Image Source="{Binding ActividadesDTO.Url}"></Image>
+    </VerticalStackLayout>
+</ContentPage>

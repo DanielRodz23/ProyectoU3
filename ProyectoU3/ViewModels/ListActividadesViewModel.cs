@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ProyectoU3.Models.DTOs;
 using ProyectoU3.Services;
+using ProyectoU3.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,7 +45,12 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         void AgregarDepartamento()
         {
-
+            
+        }
+        [RelayCommand]
+        async void VerActividad(int id)
+        {
+            await Shell.Current.GoToAsync("//" + nameof(VerDetallesActividadView) + $"?id={id}");
         }
 
     }

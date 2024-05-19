@@ -11,8 +11,13 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type models:ActividadesDTO}">
                     <Frame Margin="10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListActividadesViewModel}}, Path=VerActividadCommand}" CommandParameter="{Binding id}">
+                            </TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
                         <Grid ColumnDefinitions=".7*, .3*"
                           RowDefinitions="60, 30, Auto, Auto ">
+                          
                         <Label Text="{Binding titulo}"
                                Grid.Column="0"
                                Grid.Row="0"
@@ -63,24 +68,20 @@
         </CollectionView>
 
         <Button HeightRequest="60"
-                WidthRequest="60"
                 VerticalOptions="End"
                 HorizontalOptions="End"
-                Margin="0,0,50,50"
-                Text="+"
-                Padding="0,-28,0,0"
-                FontSize="80"
+                Margin="0,0,30,130"
+                Text="Agregar Actividad"
+                FontSize="20"
                 Command="{Binding AgregarCommand}"
                 x:Name="ActButton"
                 />
         <Button HeightRequest="60"
-                WidthRequest="60"
                 VerticalOptions="End"
                 HorizontalOptions="End"
-                Margin="0,0,50,50"
-                Text="+"
-                Padding="0,-28,0,0"
-                FontSize="80"
+                Margin="0,0,30,50"
+                Text="Agregar Departamento"
+                FontSize="20"
                 x:Name="DepButton"
                 Command="{Binding AgregarDepartamentoCommand}"
                 />

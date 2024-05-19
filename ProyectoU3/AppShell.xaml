@@ -28,4 +28,8 @@
         Title="Agregar una actividad"
         ContentTemplate="{DataTemplate views:AgregarActividadView}"
         Route="AgregarActividadView"/>
+    <ShellContent
+        Title="Detalles"
+        ContentTemplate="{DataTemplate views:VerDetallesActividadView}"
+        Route="VerDetallesActividadView"/>
 </Shell>

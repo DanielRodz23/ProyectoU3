@@ -32,5 +32,18 @@ namespace ProyectoU3.Services
             var response = await client.SendAsync(rm);
             return response.IsSuccessStatusCode;
         }
+        public async Task<ActividadesDTO> GetActividadOrBorrador(string token, int id)
+        {
+            var rm = new HttpRequestMessage() { RequestUri = new Uri(client.BaseAddress + ApiUriHelper.ActividadConcatenarUri + id.ToString()), Method = HttpMethod.Get };
+            rm.Headers.Add("Authorization", $"Bearer {token}");
+            var response = await client.SendAsync(rm);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var iact = JsonSerializer.Deserialize<ActividadesDTO>(json);
+                return iact ?? new ActividadesDTO();
+            }
+            return null;
+        }
     }
 }
