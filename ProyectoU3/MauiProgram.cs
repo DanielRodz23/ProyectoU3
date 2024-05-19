@@ -31,7 +31,7 @@ namespace ProyectoU3
             builder.Services.AddTransient<ListActividadesView>();
 
             builder.Services.AddTransient<DetallesViewModel>();
-
+            builder.Services.AddTransient<VerDetallesActividadView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

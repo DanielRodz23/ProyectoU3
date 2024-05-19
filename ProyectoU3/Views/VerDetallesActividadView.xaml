@@ -4,13 +4,17 @@
              x:Class="ProyectoU3.Views.VerDetallesActividadView"
              xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
-             Title="VerDetallesActividadView"
              x:DataType="{x:Type vm:DetallesViewModel}">
+    <Grid>
     <VerticalStackLayout>
         <Label Text="{Binding ActividadesDTO.titulo}"></Label>
         <Label Text="{Binding ActividadesDTO.fechaRealizacion}"></Label>
         <Label Text="{Binding ActividadesDTO.departamento}"></Label>
         <Label Text="{Binding ActividadesDTO.descripcion}"></Label>
         <Image Source="{Binding ActividadesDTO.Url}"></Image>
+        
     </VerticalStackLayout>
+        <Button HeightRequest="40" WidthRequest="120" VerticalOptions="End" Margin="0,0,0,80" Text="Regresar" Command="{Binding RegresarCommand}"/>
+
+    </Grid>
 </ContentPage>

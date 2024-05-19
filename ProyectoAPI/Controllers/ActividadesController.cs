@@ -36,12 +36,9 @@ namespace ProyectoAPI.Controllers
             var idUsuario = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
             if (idUsuario == null) return BadRequest();
 
-            var activ = actividadesRepository.Get(id);
+            var activ = await actividadesRepository.GetIncludeDepa(id);
             if (activ == null) return NotFound();
-            if (activ.IdDepartamento != int.Parse(idUsuario.Value))
-            {
-                return Forbid();
-            }
+            
             var actDto = mapper.Map<ActividadesDTO>(activ);
             return Ok(actDto);
         }

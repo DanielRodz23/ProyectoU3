@@ -64,5 +64,9 @@ namespace ProyectoAPI.Repositories
                 .Select(x => x.Actividades.Where(e => e.Estado == (int)Estado.Borrador).First());
             return query;
         }
+        public async Task<Actividades> GetIncludeDepa(int id)
+        {
+            return ctx.Actividades.Include(x=>x.IdDepartamentoNavigation).Where(x => x.Id == id).First();
+        }
     }
 }

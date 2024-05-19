@@ -4,9 +4,12 @@ namespace ProyectoU3.Views;
 
 public partial class VerDetallesActividadView : ContentPage
 {
-	public VerDetallesActividadView(DetallesViewModel detallesViewModel)
+    private readonly DetallesViewModel detallesViewModel;
+
+    public VerDetallesActividadView(DetallesViewModel detallesViewModel)
 	{
 		InitializeComponent();
-		BindingContext = detallesViewModel;
-	}
+        this.detallesViewModel = detallesViewModel;
+		BindingContext = this.detallesViewModel;
+    }
 }

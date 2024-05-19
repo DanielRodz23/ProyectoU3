@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ProyectoU3.Models.DTOs;
 using ProyectoU3.Services;
 using System;
@@ -26,6 +27,11 @@ namespace ProyectoU3.ViewModels
         {
             var tkn = await SecureStorage.GetAsync("tkn");
             ActividadesDTO = await actividadesService.GetActividadOrBorrador(tkn, Id);
+        }
+        [RelayCommand]
+        async Task Regresar()
+        {
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace ProyectoAPI.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
         [HttpPost("{id:int}")]
-        public async Task<IActionResult> UploadImage(int id, string imgBase64)
+        public async Task<IActionResult> UploadImage([FromRoute]int id, [FromBody] string imgBase64)
         {
             //    string path = "D:\\Descargas\\MaterialDesignInXamlToolkit-master\\MaterialDesign3.Demo.Wpf\\Resources\\Contact.png";
             //    byte[] img = System.IO.File.ReadAllBytes(path);

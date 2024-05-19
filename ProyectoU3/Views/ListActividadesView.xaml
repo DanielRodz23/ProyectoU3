@@ -55,13 +55,12 @@
                                HorizontalOptions="Start"
                                />
                         <!--<Image/>-->
-                        <Label Text="Imagen"
-                               Grid.Column="0"
-                               Grid.ColumnSpan="2"
-                               Grid.Row="3"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"/>
-                    </Grid>
+                            <Image Source="{Binding Url}"
+                                   Aspect="AspectFill"
+                                   Grid.ColumnSpan="2"
+                                   Grid.Row="3"
+                                   />
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -98,5 +97,6 @@
                 x:Name="ShowButton"
                 IsVisible="Collapse"
                 />
+        
     </Grid>
 </ContentPage>

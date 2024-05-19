@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProyectoAPI.Helpers;
 using ProyectoAPI.Models.Entities;
+using ProyectoAPI.Models.LoginModels;
 using ProyectoAPI.Repositories;
 
 
@@ -56,7 +57,8 @@ builder.Services.AddTransient<DepartamentosRepository>();
 builder.Services.AddTransient<ActividadesRepository>();
 builder.Services.AddSingleton(tknValidationParameters);
 //builder.Services.AddSingleton<IWebHostEnvironment>();
-
+builder.Services.AddSingleton(DateTime.Now.AddHours(1).ToString());
+builder.Services.AddSingleton<HoraModel>();
 // builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
