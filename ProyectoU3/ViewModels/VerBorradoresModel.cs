@@ -32,7 +32,7 @@ namespace ProyectoU3.ViewModels
         private void LlenarMisborradores()
         {
             MisActividades.Clear();
-            var cons = actividadesRepository.GetAll().Where(x=>x.estado==(int)Estado.Publicado);
+            var cons = actividadesRepository.GetAll().Where(x=>x.estado==(int)Estado.Publicado );
             foreach (var item in cons)
             {
                 MisActividades.Add(mapper.Map<ActividadesDTO>(item));

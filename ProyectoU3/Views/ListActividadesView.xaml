@@ -67,7 +67,7 @@
                                 <Image.Source>
                                     <UriImageSource Uri="{Binding Url, Converter={StaticResource uri}}"
                                                     CachingEnabled="True"
-                                                    CacheValidity="14"/>
+                                                    CacheValidity="10:00:00:00"/>
                                 </Image.Source>
                             </Image>
                         </Grid>

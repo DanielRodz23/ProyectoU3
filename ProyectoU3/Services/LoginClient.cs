@@ -18,7 +18,8 @@ namespace ProyectoU3.Services
             var response = await client.PostAsync("api/login", new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsStringAsync().Result;
+                var str = response.Content.ReadAsStringAsync().Result;
+                return str;
             }
             return null;
         }
