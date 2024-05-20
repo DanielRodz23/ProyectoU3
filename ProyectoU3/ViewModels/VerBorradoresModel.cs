@@ -47,5 +47,6 @@ namespace ProyectoU3.ViewModels
                 MisBorradores.Add(mapper.Map<ActividadesDTO>(item));
             }
         }
+
     }
 }

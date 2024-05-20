@@ -85,8 +85,8 @@
             <HorizontalStackLayout>
                 <Button 
                     Margin="10"
-                Text="Ver borrador"
-                Command="{Binding AgregarCommand}"
+                Text="Actividades y Borradores"
+                Command="{Binding VerBorradoresCommand}"
                 x:Name="ActButton"
                 />
                 <Button 
