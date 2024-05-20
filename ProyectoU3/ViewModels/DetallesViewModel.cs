@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ProyectoU3.Models.DTOs;
+using ProyectoU3.Repositories;
 using ProyectoU3.Services;
 using System;
 using System.Collections.Generic;
@@ -10,28 +12,29 @@ using System.Threading.Tasks;
 
 namespace ProyectoU3.ViewModels
 {
-    [QueryProperty("Id", "id")]
     public partial class DetallesViewModel : ObservableObject
     {
         private readonly ActividadesService actividadesService;
-        [ObservableProperty]
-        int id;
+        private readonly IMapper mapper;
+        private readonly ActividadesRepository actividadesRepository;
+      
         [ObservableProperty]
         ActividadesDTO actividadesDTO = new();
-        public DetallesViewModel( ActividadesService actividadesService)
+        public DetallesViewModel( ActividadesService actividadesService, IMapper mapper, ActividadesRepository actividadesRepository)
         {
             this.actividadesService = actividadesService;
-            CargarDetalles();
+            this.mapper = mapper;
+            this.actividadesRepository = actividadesRepository;
         }
-        async Task CargarDetalles()
+        public void CargarDetalles(int id)
         {
-            var tkn = await SecureStorage.GetAsync("tkn");
-            ActividadesDTO = await actividadesService.GetActividadOrBorrador(tkn, Id);
+            var activ = actividadesRepository.Get(id);
+            ActividadesDTO = mapper.Map<ActividadesDTO>(activ) ;
         }
         [RelayCommand]
         async Task Regresar()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("//ListaActividadesView");
         }
     }
 }

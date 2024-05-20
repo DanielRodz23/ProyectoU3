@@ -17,15 +17,15 @@ namespace ProyectoAPI.Controllers
         private readonly DepartamentosRepository departamentosRepository = departamentosRepository;
         private readonly IMapper mapper = mapper;
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllActivities()
+        [HttpGet("{fecha?}")]
+        public async Task<IActionResult> GetAllActivities(DateTime? fecha)
         {
             var context = HttpContext;
             var idUsuario = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
             if (idUsuario == null) return BadRequest();
             var currentUser = departamentosRepository.Get(int.Parse(idUsuario.Value));
             if (currentUser == null) return NotFound();
-            var actividades = await actividadesRepository.GetAllActividadesPublicadasAsync(currentUser.Id);
+            var actividades = await actividadesRepository.GetAllActividadesPublicadasAsync(currentUser.Id, fecha?? new DateTime(2000, 01, 01));
             var actividadesDTO = mapper.Map<IEnumerable<ActividadesDTO>>(actividades);
             return Ok(actividadesDTO);
         }
@@ -42,8 +42,8 @@ namespace ProyectoAPI.Controllers
             var actDto = mapper.Map<ActividadesDTO>(activ);
             return Ok(actDto);
         }
-        [HttpGet("GetMyBorradores")]
-        public async Task<IActionResult> GetMyBorradores()
+        [HttpGet("GetMyBorradores/{fecha?}")]
+        public async Task<IActionResult> GetMyBorradores(DateTime? fecha)
         {
             var context = HttpContext;
             var idUsuario = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
@@ -51,24 +51,30 @@ namespace ProyectoAPI.Controllers
             var currentUser = departamentosRepository.Get(int.Parse(idUsuario.Value));
             //Si el usuario no existe
             if (currentUser == null) return NotFound();
-            var myBorrador = await actividadesRepository.GetMyBorradorAsync(currentUser.Id);
+            var myBorrador = await actividadesRepository.GetMyBorradorAsync(currentUser.Id, fecha??DateTime.MinValue);
             var borradorMapd = mapper.Map<IEnumerable<ActividadesDTO>>(myBorrador);
             return Ok(borradorMapd);
         }
         [HttpPost]
-        public async Task<IActionResult> PostActividad(ActividadesDTO actividadesDTO)
+        public async Task<IActionResult> PostActividad(InsertAct actDTO)
         {
+            ActividadesDTO actividadesDTO = new ActividadesDTO()
+            {
+                Titulo = actDTO.Titulo,
+                Descripcion = actDTO.Descripcion,
+                FechaRealizacion  = new DateOnly(actDTO.Anio, actDTO.Mes, actDTO.Dia),
+                Estado = actDTO.Estado
+            };
             var context = HttpContext;
             var claimTkn = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
             if (claimTkn == null) return BadRequest();
             var id = int.Parse(claimTkn.Value);
-            actividadesDTO.Id = 0;
             actividadesDTO.IdDepartamento = id;
-            actividadesDTO.FechaCreacion = DateTime.UtcNow;
             //TODO validar aqui
             var actividades = mapper.Map<Actividades>(actividadesDTO);
             actividadesRepository.Insert(actividades);
-            return Ok();
+            actividadesDTO = mapper.Map<ActividadesDTO>(actividades);
+            return Ok(actividadesDTO);
         }
         [HttpPut]
         public async Task<ActionResult> UpdateActividad(ActividadesDTO actividadesDTO)
@@ -85,8 +91,9 @@ namespace ProyectoAPI.Controllers
             actividad.Titulo = actividadesDTO.Titulo;
             actividad.Descripcion = actividadesDTO.Descripcion;
             actividad.FechaRealizacion = actividadesDTO.FechaRealizacion;
+            actividad.FechaActualizacion = DateTime.UtcNow;
             actividad.Estado = actividadesDTO.Estado;
-            if (actividad.Estado == 2) actividad.FechaCreacion = DateTime.UtcNow;
+            if (actividad.Estado == (int)Estado.Publicado) actividad.FechaCreacion = DateTime.UtcNow;
             else { actividad.FechaCreacion = actividadesDTO.FechaCreacion; }
 
             //TODO validar
@@ -111,6 +118,7 @@ namespace ProyectoAPI.Controllers
             {
                 var activ = actividadesRepository.Get(id);
                 activ.Estado = (int)Estado.Eliminado;
+                activ.FechaActualizacion = DateTime.UtcNow;
                 actividadesRepository.Update(activ);
                 return Ok();
             }

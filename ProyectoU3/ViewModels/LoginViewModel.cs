@@ -17,7 +17,7 @@ namespace ProyectoU3.ViewModels
         public LoginViewModel(LoginClient loginClient)
         {
             this.loginClient = loginClient;
-            CheckTkn();
+            //CheckTkn();
             IsEnabled = true;
         }
         [ObservableProperty]
@@ -33,16 +33,18 @@ namespace ProyectoU3.ViewModels
         {
             var tkn = await SecureStorage.GetAsync("tkn");
             if (tkn == null) return;
-            var Valido = await loginClient.Validar(tkn);
-            if (Valido)
-            {
-                await Shell.Current.GoToAsync("//ListaActividadesView");
-                Shell.Current.ToolbarItems.First().IsEnabled = true;
-            }
-            else
-            {
-                SecureStorage.RemoveAll();
-            }
+            await Shell.Current.GoToAsync("//ListaActividadesView");
+            Shell.Current.ToolbarItems.First().IsEnabled = true;
+            //var Valido = await loginClient.Validar(tkn);
+            //if (Valido)
+            //{
+            //    await Shell.Current.GoToAsync("//ListaActividadesView");
+            //    Shell.Current.ToolbarItems.First().IsEnabled = true;
+            //}
+            //else
+            //{
+            //    SecureStorage.RemoveAll();
+            //}
         }
         [RelayCommand]
         async void Login()

@@ -16,14 +16,6 @@ public partial class ListActividadesView : ContentPage
         //}
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-        ShowButton.IsEnabled = false;
-        if (!Showed)
-        {
-            //ActButton.TranslateTo(ActButton.TranslationX);
-        }
-
-    }
+    
 
 }

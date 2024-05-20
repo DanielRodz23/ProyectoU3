@@ -2,27 +2,44 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProyectoU3.Views.AgregarActividadView"
-             Title="AgregarActividadView">
-    <VerticalStackLayout Spacing="10">
-        <Label Text="Agregar Actividad" HorizontalOptions="Center" FontSize="40" />
+             xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
+             x:DataType="{x:Type vm:AgregarActividadViewModel}"
+             Title="Agregar Actividad">
+    <Grid RowDefinitions=".05*, *">
+        <ImageButton 
+            Grid.Row="0"
+            HeightRequest="30"
+            WidthRequest="30"
+            Source="arrow.png"
+            Aspect="AspectFill"
+            HorizontalOptions="Start"
+            Margin="15,0,0,0"
+            Command="{Binding GoBackCommand}"
+            />
+        <VerticalStackLayout Spacing="10" Grid.Row="1">
+            <Label Text="Agregar Actividad" HorizontalOptions="Center" FontSize="40" />
 
-        <Entry Placeholder="Titulo de la la Actividad"></Entry>
-        <Label></Label>
+            <Entry Placeholder="Titulo de la la Actividad" Text="{Binding Actividad.titulo}"></Entry>
+            <Label TextColor="Red" Text="{Binding ErrorTitulo}"></Label>
 
-        <Label Text="Fecha de la Actividad"></Label>
-        <DatePicker ></DatePicker>
-        <Label></Label>       
+            <Label Text="Fecha de la Actividad"></Label>
+            <DatePicker Date="{Binding Fecha}" ></DatePicker>
+            <Label TextColor="Red" Text="{Binding ErrorFechaRealizacion}"></Label>
 
-        <Entry Placeholder="Descripcion de la actividad"></Entry>
-        <Label></Label>
-        
-        <!--editar el adroid manifest.xalm read_external_storage-->
-        <Button Text="Agregar Imagen" ></Button>
-        
-        
-        <Button Text="Agegar"></Button>
+            <Entry Placeholder="Descripcion de la actividad" Text="{Binding Actividad.descripcion}"></Entry>
+            <Label TextColor="Red" Text="{Binding ErrorDescripcion}"></Label>
 
-        <Button Text="Guardar como Borrador"></Button>
+            <!--editar el adroid manifest.xalm read_external_storage-->
+            <!--<Button Text="Agregar Imagen" Command="{Binding PedirFotoCommand}" ></Button>-->
 
-    </VerticalStackLayout>
+
+            <Button Text="Agegar" Command="{Binding AgregarActividadCommand}"></Button>
+
+            <Button Text="Guardar como Borrador" Command="{Binding AgregarBorradorCommand}"></Button>
+
+            <Label TextColor="Red" Text="{Binding ErrorGeneral}"></Label>
+               
+
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

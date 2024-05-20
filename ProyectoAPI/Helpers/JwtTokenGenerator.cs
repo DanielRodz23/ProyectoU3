@@ -39,7 +39,7 @@ namespace ProyectoAPI.Helpers
                 Subject = new ClaimsIdentity(claims),
                 Issuer = jwtModel.Issuer,
                 Audience = jwtModel.Audience,
-                Expires = DateTime.UtcNow.AddMinutes(20),
+                Expires = DateTime.UtcNow.AddHours(24),
                 SigningCredentials = signin
             };
             var data =handler.CreateEncodedJwt(token); 

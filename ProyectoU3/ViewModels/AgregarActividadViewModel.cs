@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ProyectoU3.Helpers;
 using ProyectoU3.Models.DTOs;
 using ProyectoU3.Services;
 using ProyectoU3.Views;
@@ -15,19 +16,6 @@ namespace ProyectoU3.ViewModels
     {
         //hola espero no regarla
         //aguas con esto jaja
-        private async void OncouterClicked(object sender, EventArgs e)
-        {
-            var result = await FilePicker.PickAsync(new PickOptions
-            {
-                PickerTitle="Agregar Imagen",
-                FileTypes=FilePickerFileType.Images
-            });
-            if (result == null)
-                return;
-
-            var stream = await result.OpenReadAsync();
-        }
-
 
 
         private readonly ActividadesService actividadesService;
@@ -36,16 +24,53 @@ namespace ProyectoU3.ViewModels
         {
             this.actividadesService = actividadesService;
             IsBorrador = false;
+            Fecha = DateTime.Now;
         }
         bool IsBorrador;
         [ObservableProperty] string errorTitulo;
         [ObservableProperty] string errorDescripcion;
         [ObservableProperty] string errorImagen;
         [ObservableProperty] string errorFechaRealizacion;
-        [ObservableProperty] string errorGeneral;
-        
+        [ObservableProperty] string errorGeneral = "";
+
+        [ObservableProperty]
+        string base64Imagen;
+
+        [ObservableProperty]
+        DateTime fecha;
+
         [ObservableProperty]
         ActividadesDTO actividad = new();
+
+        [RelayCommand]
+        async Task PedirFoto()
+        {
+            var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.Android, new[] { "image/png" } }, // MIME type
+            });
+
+            var pickOptions = new PickOptions
+            {
+                PickerTitle = "Agregar Imagen",
+                FileTypes = customFileType
+            };
+
+            var result = await FilePicker.PickAsync(pickOptions);
+
+            if (result == null)
+                return ;
+
+            var stream = await result.OpenReadAsync();
+            var memoryStream = new MemoryStream();
+
+            await stream.CopyToAsync(memoryStream);
+            var imageBytes = memoryStream.ToArray();
+            memoryStream.Close();
+            Base64Imagen = Convert.ToBase64String(imageBytes);
+        }
+
+
 
         [RelayCommand]
         void AgregarBorrador()
@@ -57,41 +82,59 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         async void AgregarActividad()
         {
+            Actividad.fechaRealizacion = new DateOnly(Fecha.Year, Fecha.Month, Fecha.Day);
             //Validar actividad
             //[ObservableProperty] string errorTitulo;
-            if (string.IsNullOrWhiteSpace(Actividad.titulo)) ErrorTitulo = "El titulo no es valido"; else { ErrorTitulo = "";  }
+            if (string.IsNullOrWhiteSpace(Actividad.titulo)) ErrorTitulo = "El titulo no es valido"; else { ErrorTitulo = ""; }
             //[ObservableProperty] string errorDescripcion;
             if (string.IsNullOrWhiteSpace(Actividad.descripcion)) ErrorDescripcion = "La descripcion no es valida"; else { ErrorDescripcion = ""; }
             //[ObservableProperty] string errorFechaRealizacion;
-            var fecha = Actividad.fechaRealizacion??new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            if (fecha.ToDateTime(TimeOnly.MinValue) > DateTime.Now || fecha.ToDateTime(TimeOnly.MinValue)<new DateTime(1990,1,1)) ErrorFechaRealizacion = "La fecha no es valida"; else { ErrorFechaRealizacion = ""; }
+            //var fecha = Actividad.fechaRealizacion??new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            if (Fecha >= DateTime.Today || Fecha < new DateTime(1990, 1, 1)) ErrorFechaRealizacion = "La fecha no es valida"; else { ErrorFechaRealizacion = ""; }
 
             //TODO validar imagen
             ErrorImagen = "";
-
+            ErrorGeneral = "";
             var tkn = await SecureStorage.GetAsync("tkn");
-            var actividadValidada = ErrorTitulo == "" && ErrorDescripcion == "" && ErrorImagen == "" && ErrorFechaRealizacion == "" && ErrorGeneral == "";
-            if (actividadValidada && tkn!=null)
+            var actividadValidada = (ErrorTitulo == "" && ErrorDescripcion == "" && ErrorImagen == "" && ErrorFechaRealizacion == "" && ErrorGeneral == "");
+            if (actividadValidada && tkn != null)
             {
                 if (IsBorrador)
                 {
-                    Actividad.estado = 1;
+                    Actividad.estado = (int)Estado.Borrador;
                 }
                 else
                 {
-                    Actividad.estado = 2;
+                    Actividad.estado = (int)Estado.Publicado;
                 }
-                var Insertado = await actividadesService.InsertarActividad(tkn, Actividad);
-                if (Insertado)
+                
+                var Insertado = await actividadesService.InsertarActividad(tkn, new InsertAct 
                 {
-                    await Shell.Current.GoToAsync("//" + nameof(ListActividadesView));
+                    Titulo = Actividad.titulo, 
+                    Descripcion=Actividad.descripcion,
+                    Anio=Actividad.fechaRealizacion.Value.Year,
+                    Mes = Actividad.fechaRealizacion.Value.Month,
+                    Dia = Actividad.fechaRealizacion.Value.Day
+                });
+                if (Insertado!=0)
+                {
+                    await PedirFoto();
+                    await actividadesService.UploadImagen(Insertado, Base64Imagen);
+
+                    await Shell.Current.GoToAsync("//ListaActividadesView");
                 }
                 else
                 {
                     ErrorGeneral = "Hubo un error en el envio de datos";
                 }
+
             }
 
+        }
+        [RelayCommand]
+        void GoBack()
+        {
+            Shell.Current.GoToAsync("//ListaActividadesView");
         }
     }
 }

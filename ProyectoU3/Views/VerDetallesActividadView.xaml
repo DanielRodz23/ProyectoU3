@@ -3,15 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProyectoU3.Views.VerDetallesActividadView"
              xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
+             xmlns:helpers="clr-namespace:ProyectoU3.Helpers"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              x:DataType="{x:Type vm:DetallesViewModel}">
+    <ContentPage.Resources>
+        <helpers:ConvertUrlToUri x:Key="uri"/>
+    </ContentPage.Resources>
     <Grid>
     <VerticalStackLayout>
         <Label Text="{Binding ActividadesDTO.titulo}"></Label>
-        <Label Text="{Binding ActividadesDTO.fechaRealizacion}"></Label>
+            <Label Text="{Binding ActividadesDTO.fechaRealizacion, StringFormat='{0:MM/dd/yyyy}'}"></Label>
         <Label Text="{Binding ActividadesDTO.departamento}"></Label>
         <Label Text="{Binding ActividadesDTO.descripcion}"></Label>
-        <Image Source="{Binding ActividadesDTO.Url}"></Image>
+        <Image>
+                <Image.Source>
+                    <UriImageSource Uri="{Binding ActividadesDTO.Url, Converter={StaticResource uri}}"
+                    CachingEnabled="True"
+                    CacheValidity="14"/>
+                </Image.Source>
+            </Image>
         
     </VerticalStackLayout>
         <Button HeightRequest="40" WidthRequest="120" VerticalOptions="End" Margin="0,0,0,80" Text="Regresar" Command="{Binding RegresarCommand}"/>
