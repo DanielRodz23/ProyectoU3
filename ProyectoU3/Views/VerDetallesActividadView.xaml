@@ -10,21 +10,20 @@
         <helpers:ConvertUrlToUri x:Key="uri"/>
     </ContentPage.Resources>
     <Grid>
-    <VerticalStackLayout>
-        <Label Text="{Binding ActividadesDTO.titulo}"></Label>
+        <VerticalStackLayout>
+            <Label Text="{Binding ActividadesDTO.titulo}"></Label>
             <Label Text="{Binding ActividadesDTO.fechaRealizacion, StringFormat='{0:MM/dd/yyyy}'}"></Label>
-        <Label Text="{Binding ActividadesDTO.departamento}"></Label>
-        <Label Text="{Binding ActividadesDTO.descripcion}"></Label>
-        <Image>
+            <Label Text="{Binding ActividadesDTO.departamento}"></Label>
+            <Label Text="{Binding ActividadesDTO.descripcion}"></Label>
+            <Image>
                 <Image.Source>
                     <UriImageSource Uri="{Binding ActividadesDTO.Url, Converter={StaticResource uri}}"
                     CachingEnabled="True"
                     CacheValidity="14"/>
                 </Image.Source>
             </Image>
-        
-    </VerticalStackLayout>
-        <Button HeightRequest="40" WidthRequest="120" VerticalOptions="End" Margin="0,0,0,80" Text="Regresar" Command="{Binding RegresarCommand}"/>
 
+        </VerticalStackLayout>
+        <Button HeightRequest="40" WidthRequest="120" VerticalOptions="End" Margin="0,0,0,80" Text="Regresar" Command="{Binding RegresarCommand}"/>
     </Grid>
 </ContentPage>

@@ -31,8 +31,9 @@ namespace ProyectoU3.ViewModels
 
         private void LlenarMisborradores()
         {
+            int id = Preferences.Get("Id", 0);
             MisActividades.Clear();
-            var cons = actividadesRepository.GetAll().Where(x=>x.estado==(int)Estado.Publicado );
+            var cons = actividadesRepository.GetAll().Where(x=>x.estado==(int)Estado.Publicado && x.idDepartamento == id);
             foreach (var item in cons)
             {
                 MisActividades.Add(mapper.Map<ActividadesDTO>(item));
@@ -41,8 +42,10 @@ namespace ProyectoU3.ViewModels
 
         private void LlenarMisActividades()
         {
+            int id = Preferences.Get("Id", 0);
             MisBorradores.Clear();
             var cons = actividadesRepository.GetAll().Where(x => x.estado == (int)Estado.Borrador);
+            cons = cons.Where(x => x.idDepartamento == id);
             foreach (var item in cons)
             {
                 MisBorradores.Add(mapper.Map<ActividadesDTO>(item));

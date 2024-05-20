@@ -1,4 +1,5 @@
-﻿using ProyectoU3.Models.LoginModels;
+﻿using Microsoft.Maui.Controls.PlatformConfiguration;
+using ProyectoU3.Models.LoginModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,16 @@ namespace ProyectoU3.Services
             if (response.IsSuccessStatusCode)
             {
                 var str = response.Content.ReadAsStringAsync().Result;
+                HttpRequestMessage rm = new HttpRequestMessage();
+                rm.RequestUri = new Uri(client.BaseAddress + "api/prueba");
+                rm.Method = HttpMethod.Get;
+                rm.Headers.Add("Authorization", $"Bearer {str}");
+                var resp = await client.SendAsync(rm);
+                if (resp.IsSuccessStatusCode)
+                {
+                    var id = resp.Content.ReadAsStringAsync().Result;
+                    Preferences.Set("Id", int.Parse(id));
+                }
                 return str;
             }
             return null;
