@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ProyectoU3.Helpers;
 using ProyectoU3.Models.DTOs;
 using ProyectoU3.Repositories;
@@ -48,5 +49,10 @@ namespace ProyectoU3.ViewModels
             }
         }
 
+        [RelayCommand]
+        void VerActividadOrBorrador(int id)
+        {
+
+        }
     }
 }
