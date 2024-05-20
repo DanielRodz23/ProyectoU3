@@ -35,8 +35,7 @@
                  LineBreakMode="TailTruncation"/>
                             </Grid>
                         </Frame>
-                            
-                            
+                           
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -53,10 +52,16 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
                         <SwipeView>
-                        <Frame Margin="10">
-                            <Grid ColumnDefinitions=".7*, .3*"
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="eliminar" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VerBorradoresModel}},Path= VerActividadOrBorradorCommand}" CommandParameter="{Binding id }"></SwipeItem>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame Margin="10">
+                                <Grid ColumnDefinitions=".7*, .3*"
             RowDefinitions="60, 30, Auto, Auto ">
-                                <Label Text="{Binding titulo}"
+                                    <Label Text="{Binding titulo}"
                  Grid.Column="0"
                  Grid.Row="0"
                  VerticalOptions="Center"
@@ -64,9 +69,8 @@
                  FontSize="Large"
                  MaxLines="1"
                  LineBreakMode="TailTruncation"/>
-                            </Grid>
-                        </Frame>
-                            
+                                </Grid>
+                            </Frame>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
