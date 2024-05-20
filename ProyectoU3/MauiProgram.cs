@@ -38,6 +38,7 @@ namespace ProyectoU3
             builder.Services.AddTransient<AgregarActividadViewModel>();
             builder.Services.AddTransient<AgregarActividadView>();
             builder.Services.AddTransient<VerBorradoresModel>();
+            builder.Services.AddTransient<VerBorradorView>();
 
             builder.Services.AddAutoMapper(typeof(MauiProgram));
 #if DEBUG
