@@ -57,5 +57,15 @@ namespace ProyectoU3.ViewModels
         {
 
         }
+
+        //si
+        [RelayCommand]
+        void VerBorradores(int id)
+        {
+
+        }
+
+
+
     }
 }

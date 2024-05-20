@@ -7,13 +7,25 @@
              Title="VerBorradorView"
              x:DataType="{x:Type vm:VerBorradoresModel}">
 
-    <Grid RowDefinitions=".5*,.5*">
+    <Grid RowDefinitions=".05*, *">
+        <ImageButton 
+        Grid.Row="0"
+        HeightRequest="30"
+        WidthRequest="30"
+        Source="arrow.png"
+        Aspect="AspectFill"
+        HorizontalOptions="Start"
+        Margin="15,0,0,0"
+        Command="{Binding VerBorradoresCommand}"/>
+        
+        
+        <Grid RowDefinitions=".5*,.5*">
 
-        <Grid Grid.Row="0" RowDefinitions=".05*, *">
-            <Label Text="Mis actividades" Grid.Row="0"></Label>
-            <CollectionView Grid.Row="1" ItemsSource="{Binding MisActividades}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
+            <Grid Grid.Row="0" RowDefinitions=".05*, *">
+                <Label Text="Mis actividades" Grid.Row="0"></Label>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding MisActividades}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
                             <SwipeView>
                                 <SwipeView.RightItems>
                                     <SwipeItems>
@@ -34,13 +46,13 @@
                                     </Grid>
                                 </Frame>
                             </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
 
 
-        <Grid Grid.Row="1" RowDefinitions=".05*, *">
+            <Grid Grid.Row="1" RowDefinitions=".05*, *">
 
 
                 <Label Text="Mis borradores" Grid.Row="0"></Label>
@@ -68,12 +80,13 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-        </Grid>
+            </Grid>
 
 
 
 
-        <!--<Button HeightRequest="60"
+            
+            <!--<Button HeightRequest="60"
         WidthRequest="160"
         VerticalOptions="End"
         HorizontalOptions="End"
@@ -84,6 +97,11 @@
         
         />-->
 
-        <!--<Button Text="Publicar"></Button>-->
+            <!--<Button Text="Publicar"></Button>-->
+        </Grid>
+
     </Grid>
+
+
+
 </ContentPage>
