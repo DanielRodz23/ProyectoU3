@@ -6,26 +6,24 @@
              xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
              Title="VerBorradorView"
              x:DataType="{x:Type vm:VerBorradoresModel}">
-    
+
     <Grid RowDefinitions=".5*,.5*">
-        
-        <VerticalStackLayout Grid.Row="0">
-            <CollectionView ItemsSource="{Binding MisActividades}">
 
-
+        <Grid Grid.Row="0" RowDefinitions=".05*, *">
+            <Label Text="Mis actividades" Grid.Row="0"></Label>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding MisActividades}">
                 <CollectionView.ItemTemplate>
-                    
                     <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="eliminar" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VerBorradoresModel}},Path= VerActividadOrBorradorCommand}" CommandParameter="{Binding id }"></SwipeItem>
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                        <Frame Margin="10">
-                            <Grid ColumnDefinitions=".7*, .3*"
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="eliminar" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VerBorradoresModel}},Path= VerActividadOrBorradorCommand}" CommandParameter="{Binding id }"></SwipeItem>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Frame Margin="10">
+                                    <Grid ColumnDefinitions=".7*, .3*"
             RowDefinitions="60, 30, Auto, Auto ">
-                                <Label Text="{Binding titulo}"
+                                        <Label Text="{Binding titulo}"
                  Grid.Column="0"
                  Grid.Row="0"
                  VerticalOptions="Center"
@@ -33,30 +31,29 @@
                  FontSize="Large"
                  MaxLines="1"
                  LineBreakMode="TailTruncation"/>
-                            </Grid>
-                        </Frame>
-                            
-                            
-                        </SwipeView>
+                                    </Grid>
+                                </Frame>
+                            </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="Mis actividades"></Label>
-        </VerticalStackLayout>
-
-        <CollectionView></CollectionView>
-
-        <VerticalStackLayout Grid.Row="1">
-            <CollectionView ItemsSource="{Binding MisBorradores}">
+        </Grid>
 
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
-                        <SwipeView>
-                        <Frame Margin="10">
-                            <Grid ColumnDefinitions=".7*, .3*"
+        <Grid Grid.Row="1" RowDefinitions=".05*, *">
+
+
+                <Label Text="Mis borradores" Grid.Row="0"></Label>
+                <CollectionView ItemsSource="{Binding MisBorradores}" Grid.Row="1">
+
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
+                            <SwipeView>
+                                <Frame Margin="10">
+                                    <Grid ColumnDefinitions=".7*, .3*"
             RowDefinitions="60, 30, Auto, Auto ">
-                                <Label Text="{Binding titulo}"
+                                        <Label Text="{Binding titulo}"
                  Grid.Column="0"
                  Grid.Row="0"
                  VerticalOptions="Center"
@@ -64,19 +61,17 @@
                  FontSize="Large"
                  MaxLines="1"
                  LineBreakMode="TailTruncation"/>
-                            </Grid>
-                        </Frame>
-                            
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Label Text="Mis borradores"></Label>
-        </VerticalStackLayout>
-        <CollectionView></CollectionView>
+                                    </Grid>
+                                </Frame>
 
-        
-        
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+        </Grid>
+
+
+
 
         <!--<Button HeightRequest="60"
         WidthRequest="160"
@@ -89,6 +84,6 @@
         
         />-->
 
-            <!--<Button Text="Publicar"></Button>--> 
+        <!--<Button Text="Publicar"></Button>-->
     </Grid>
 </ContentPage>
