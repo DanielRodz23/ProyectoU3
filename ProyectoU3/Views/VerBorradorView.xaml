@@ -5,7 +5,7 @@
              Title="VerBorradorView">
     <Grid RowDefinitions=".5*,.5*">
         
-        <VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="0">
             <CollectionView ItemsSource="{Binding}">
 
 
@@ -32,7 +32,7 @@
 
         <CollectionView></CollectionView>
 
-        <VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1">
             <CollectionView ItemsSource="{Binding}">
 
 
