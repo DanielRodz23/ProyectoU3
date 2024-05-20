@@ -3,50 +3,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProyectoU3.Views.VerBorradorView"
              Title="VerBorradorView">
-    <Grid>
-        <!--aqui borre todo porque me daba error-->
-        <CollectionView ItemsSource="{Binding}">
-            
-            <!--<CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                    <x:String>test</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>-->
-
-            <CollectionView.ItemTemplate>
-                <DataTemplate >
-                    <Frame Margin="10">
-                        <Grid ColumnDefinitions=".7*, .3*"
-                   RowDefinitions="60, 30, Auto, Auto ">
-                            <Label Text="{Binding titulo}"
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start"
-                        FontSize="Large"
-                        MaxLines="1"
-                        LineBreakMode="TailTruncation"/> 
+    <Grid RowDefinitions=".5*,.5*">
+        
+        <VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding}">
 
 
-                           
-                         
-                            
-                            
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate >
+                        <Frame Margin="10">
+                            <Grid ColumnDefinitions=".7*, .3*"
+            RowDefinitions="60, 30, Auto, Auto ">
+                                <Label Text="{Binding titulo}"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Start"
+                 FontSize="Large"
+                 MaxLines="1"
+                 LineBreakMode="TailTruncation"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="Mis actividades"></Label>
+        </VerticalStackLayout>
 
-        <Button HeightRequest="60"
+        <CollectionView></CollectionView>
+
+        <VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding}">
+
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate >
+                        <Frame Margin="10">
+                            <Grid ColumnDefinitions=".7*, .3*"
+            RowDefinitions="60, 30, Auto, Auto ">
+                                <Label Text="{Binding titulo}"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Start"
+                 FontSize="Large"
+                 MaxLines="1"
+                 LineBreakMode="TailTruncation"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="Mis borradores"></Label>
+        </VerticalStackLayout>
+        <CollectionView></CollectionView>
+
+        
+        
+
+        <!--<Button HeightRequest="60"
         WidthRequest="160"
         VerticalOptions="End"
         HorizontalOptions="End"
@@ -55,7 +70,7 @@
         Padding="0,-28,0,0"
         FontSize="40"
         
-        />
+        />-->
 
             <!--<Button Text="Publicar"></Button>--> 
     </Grid>

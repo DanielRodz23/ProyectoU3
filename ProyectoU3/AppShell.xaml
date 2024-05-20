@@ -13,26 +13,26 @@
         <ToolbarItem Text="Cerrar sesion" Order="Primary" Command="{Binding CerrarSesionCommand}"></ToolbarItem>
     </Shell.ToolbarItems>   
 
-<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:LoginView}"
-        Route="LoginView" />
+<shellcontent
+        title="home"
+        contenttemplate="{datatemplate views:loginview}"
+        route="loginview" />
     
-    <ShellContent
-        Title="Lista de actividades"
-        ContentTemplate="{DataTemplate views:ListActividadesView}"
-        x:Name="ListaActividadesView"
-        Route="ListaActividadesView"/>
+    <shellcontent
+        title="lista de actividades"
+        contenttemplate="{datatemplate views:listactividadesview}"
+        x:name="listaactividadesview"
+        route="listaactividadesview"/>
 
-    <ShellContent
-        Title="Agregar una actividad"
-        ContentTemplate="{DataTemplate views:AgregarActividadView}"
-        Route="AgregarActividadView"/>
+    <shellcontent
+        title="agregar una actividad"
+        contenttemplate="{datatemplate views:agregaractividadview}"
+        route="agregaractividadview"/>
 
-    <ShellContent
-        Title="Agregar Departamento"
-        ContentTemplate="{DataTemplate views:AgregarDepartamento}"
-        Route="AgregarDepartamentoView"/>
+    <shellcontent
+        title="agregar departamento"
+        contenttemplate="{datatemplate views:agregardepartamento}"
+        route="agregardepartamentoview"/>
 
     <ShellContent
         Title="VerBorrador"
