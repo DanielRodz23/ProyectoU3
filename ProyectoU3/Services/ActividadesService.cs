@@ -155,6 +155,7 @@ namespace ProyectoU3.Services
 
                         _ = MainThread.InvokeOnMainThreadAsync(() =>
                         {
+                            CommunityToolkit.Maui.Alerts.Toast.Make("Actualizado").Show();
                             DatosActualizados?.Invoke();
                         });
                     }
