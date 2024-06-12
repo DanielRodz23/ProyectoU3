@@ -7,7 +7,7 @@
              Title="VerBorradorView"
              x:DataType="{x:Type vm:VerBorradoresModel}">
 
-    <Grid RowDefinitions=".05*, *">
+    <Grid RowDefinitions=".1*, *" BackgroundColor="Wheat">
         <ImageButton 
         Grid.Row="0"
         HeightRequest="30"
@@ -17,12 +17,10 @@
         HorizontalOptions="Start"
         Margin="15,0,0,0"
         Command="{Binding VerBorradoresCommand}"/>
-        
-        
-        <Grid RowDefinitions=".5*,.5*">
 
-            <Grid Grid.Row="0" RowDefinitions=".05*, *">
-                <Label Text="Mis actividades" Grid.Row="0"></Label>
+        <Grid Grid.Row="1" RowDefinitions=".5*,.5*">
+            <Grid Grid.Row="0" RowDefinitions="Auto, *">
+                <Label Margin="20,0,0,0" FontSize="Medium" FontAttributes="Bold" Text="Mis actividades" Grid.Row="0"></Label>
                 <CollectionView Grid.Row="1" ItemsSource="{Binding MisActividades}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
@@ -51,11 +49,8 @@
                 </CollectionView>
             </Grid>
 
-
-            <Grid Grid.Row="1" RowDefinitions=".05*, *">
-
-
-                <Label Text="Mis borradores" Grid.Row="0"></Label>
+            <Grid Grid.Row="1" RowDefinitions="Auto, *">
+                <Label Margin="20,0,0,0" FontSize="Medium" FontAttributes="Bold" Text="Mis borradores" Grid.Row="0"></Label>
                 <CollectionView ItemsSource="{Binding MisBorradores}" Grid.Row="1">
 
 
@@ -81,27 +76,8 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
-
-
-
-
-            
-            <!--<Button HeightRequest="60"
-        WidthRequest="160"
-        VerticalOptions="End"
-        HorizontalOptions="End"
-        Margin="0,0,50,50"
-        Text="Editar"
-        Padding="0,-28,0,0"
-        FontSize="40"
-        
-        />-->
-
-            <!--<Button Text="Publicar"></Button>-->
         </Grid>
 
     </Grid>
-
-
 
 </ContentPage>

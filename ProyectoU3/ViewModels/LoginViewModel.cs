@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Platform;
 using ProyectoU3.Models.LoginModels;
+using ProyectoU3.Repositories;
 using ProyectoU3.Services;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,28 @@ namespace ProyectoU3.ViewModels
     public partial class LoginViewModel : ObservableObject
     {
 
-        public LoginViewModel(LoginClient loginClient)
+        public LoginViewModel(LoginClient loginClient, ActividadesService actividadesService, ActividadesRepository actividadesRepository)
         {
             this.loginClient = loginClient;
+            this.actividadesService = actividadesService;
+            this.actividadesRepository = actividadesRepository;
             //CheckTkn();
             IsEnabled = true;
+
+            var dato = actividadesRepository.GetAll().Count();
         }
         [ObservableProperty]
-        string username;
+        string username = "director@realmail.com";
         [ObservableProperty]
-        string password;
+        string password = "Admina1";
         [ObservableProperty]
         string error;
         [ObservableProperty]
         bool isEnabled;
         private readonly LoginClient loginClient;
+        private readonly ActividadesService actividadesService;
+        private readonly ActividadesRepository actividadesRepository;
+
         async void CheckTkn()
         {
             var tkn = await SecureStorage.GetAsync("tkn");
@@ -57,6 +65,8 @@ namespace ProyectoU3.ViewModels
                 else
                 {
                     await SecureStorage.SetAsync("tkn", token);
+                    App.Current.MainPage = new AppShell();
+                    //actividadesService.GetAllAsync().Wait();
                     await Shell.Current.GoToAsync("//ListaActividadesView");
                     //Shell.Current.ToolbarItems.Add(new ToolbarItem() { Text = "Cerrar sesion", Order = ToolbarItemOrder.Secondary, Command = (Shell.Current.BindingContext as ShellViewModel).CerrarSesionCommand });
                     Shell.Current.ToolbarItems.First().IsEnabled = true;

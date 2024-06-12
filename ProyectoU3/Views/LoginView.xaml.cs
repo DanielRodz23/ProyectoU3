@@ -9,8 +9,8 @@ public partial class LoginView : ContentPage
 
 		InitializeComponent();
 		this.BindingContext = viewModel;
-        var tkn =  SecureStorage.GetAsync("tkn").Result;
-        if (tkn == null) Shell.Current.ToolbarItems.First().IsEnabled = false;
+        //var tkn =  SecureStorage.GetAsync("tkn").Result;
+        //if (tkn == null) Shell.Current.ToolbarItems.First().IsEnabled = false;
         //CheckTkn();
 	}
     async void CheckTkn()

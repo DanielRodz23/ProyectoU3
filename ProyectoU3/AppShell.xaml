@@ -13,11 +13,6 @@
         <ToolbarItem Text="Cerrar sesion" Order="Primary" Command="{Binding CerrarSesionCommand}"></ToolbarItem>
     </Shell.ToolbarItems>   
 
-<ShellContent
-        Title="home"
-        ContentTemplate="{DataTemplate views:LoginView}"
-        Route="LoginView" />
-    
     <ShellContent
         Title="lista de actividades"
         ContentTemplate="{DataTemplate views:ListActividadesView}"

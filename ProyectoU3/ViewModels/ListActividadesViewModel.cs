@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Networking;
 using ProyectoU3.Helpers;
 using ProyectoU3.Models.DTOs;
 using ProyectoU3.Models.Entities;
@@ -17,15 +19,51 @@ namespace ProyectoU3.ViewModels
 {
     public partial class ListActividadesViewModel: ObservableObject
     {
-        public ListActividadesViewModel(ActividadesService actividadesService, ActividadesRepository actividadesRepository, DetallesViewModel detallesViewModel)
+        public ListActividadesViewModel(ActividadesService actividadesService, ActividadesRepository actividadesRepository, DetallesViewModel detallesViewModel, DepartamentosService adminService)
         {
             this.actividadesService = actividadesService;
             this.actividadesRepository = actividadesRepository;
             this.detallesViewModel = detallesViewModel;
+            this.adminService = adminService;
             App.ActividadesService.DatosActualizados += ActividadesService_DatosActualizados;
 
             FillList();
+
+            Thread admincheck = new Thread(CheckAdmin) { IsBackground = true };
+            admincheck.Start();
+
         }
+
+        [ObservableProperty]
+        bool isAdmin;
+        async void CheckAdmin()
+        {
+            await Task.Run(async () =>
+            {
+                var tkn = SecureStorage.GetAsync("tkn").Result;
+                while (tkn == null)
+                {
+                    tkn = SecureStorage.GetAsync("tkn").Result;
+                    Thread.Sleep(500);
+                }
+                var current = Connectivity.NetworkAccess;
+                if (current == NetworkAccess.Internet)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        IsAdmin = adminService.AdminCheckAsync(tkn).Result;
+                    });
+                }
+                else
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        Snackbar.Make("No hay internet, no se pudo comprobar rol de administrador").Show();
+                    });
+                }
+            });
+        }
+
 
         private void ActividadesService_DatosActualizados()
         {
@@ -37,12 +75,14 @@ namespace ProyectoU3.ViewModels
         private readonly ActividadesService actividadesService;
         private readonly ActividadesRepository actividadesRepository;
         private readonly DetallesViewModel detallesViewModel;
+        private readonly DepartamentosService adminService;
 
         public ObservableCollection<Actividades> ListaActividades { get; set; } = new();
         void FillList()
         {
             ListaActividades.Clear();
             var acts = actividadesRepository.GetAll().OrderByDescending(x=>x.fechaRealizacion);
+            int cant = acts.Count();
             foreach (var item in acts)
             {
                 if (item.estado==(int)Estado.Publicado)
@@ -66,18 +106,25 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         void AgregarDepartamento()
         {
-            Shell.Current.GoToAsync("//AgregarDepartamentoView");
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                Toast.Make("Se necesita internet para realizar esta acción").Show();
+                return;
+            }
+            var equis = IPlatformApplication.Current.Services.GetService<AgregarDepartamentoView>() ?? new AgregarDepartamentoView(IPlatformApplication.Current.Services.GetService<DepartamentosService>());
+            var view = new AgregarDepartamento(equis);
+            Shell.Current.Navigation.PushAsync(view);
         }
         [RelayCommand]
-        async void VerActividad(int id)
+        async Task VerActividad(int id)
         {
             detallesViewModel.CargarDetalles(id);
             await Shell.Current.GoToAsync("//" + nameof(VerDetallesActividadView));
         }
         [RelayCommand]
-        void VerBorradores()
+        async Task VerBorradores()
         {
-            Shell.Current.GoToAsync("//VerBorrador");
+            await Shell.Current.GoToAsync("//VerBorrador");
         }
 
     }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProyectoAPI.Helpers;
@@ -49,6 +50,24 @@ namespace ProyectoAPI.Controllers
             catch
             {
                 return NotFound();
+            }
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> AdminCheck()
+        {
+            var context = HttpContext;
+            var idUsuario = User.Identities.SelectMany(x => x.Claims).FirstOrDefault(x => x.Type == "id");
+            if (idUsuario == null) return BadRequest();
+            var currentUser = departamentosRepository.Get(int.Parse(idUsuario.Value));
+            if (currentUser == null) return BadRequest();
+            if (currentUser.IdSuperior == null || currentUser.IdSuperior == 0)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }

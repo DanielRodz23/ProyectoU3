@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Uri = System.Uri;
 using Exception = System.Exception;
+using CommunityToolkit.Maui.Alerts;
 
 namespace ProyectoU3.Services
 {
@@ -31,15 +32,15 @@ namespace ProyectoU3.Services
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var iact = JsonSerializer.Deserialize<IEnumerable<ActividadesDTO>>(json);
-                return iact?? new List<ActividadesDTO> ();
+                var iact = JsonSerializer.Deserialize<IEnumerable<ActividadesDTO>>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true});
+                return iact ?? new List<ActividadesDTO>();
             }
             return null;
         }
-        
+
         public async Task<int> InsertarActividad(string token, InsertAct actividad)
         {
-            var rm = new HttpRequestMessage() { RequestUri = new Uri(client.BaseAddress + ApiUriHelper.InsertActividadUri ), Method = HttpMethod.Post };
+            var rm = new HttpRequestMessage() { RequestUri = new Uri(client.BaseAddress + ApiUriHelper.InsertActividadUri), Method = HttpMethod.Post };
             rm.Headers.Add("Authorization", $"Bearer {token}");
             rm.Content = new StringContent(JsonSerializer.Serialize(actividad), Encoding.UTF8, "application/json");
             var response = await client.SendAsync(rm);
@@ -91,7 +92,7 @@ namespace ProyectoU3.Services
             var response = await client.SendAsync(rm);
 
 
-           return response.IsSuccessStatusCode;
+            return response.IsSuccessStatusCode;
         }
 
 
@@ -102,6 +103,11 @@ namespace ProyectoU3.Services
         {
             try
             {
+                //MainThread.BeginInvokeOnMainThread(async () =>
+                //{
+                //    Toast.Make("Checking").Show();
+                //});
+
                 var fecha = Preferences.Get("UltimaFechaActualizacion", DateTime.MinValue);
 
                 bool aviso = false;
@@ -110,7 +116,7 @@ namespace ProyectoU3.Services
 
                 var tkn = await SecureStorage.GetAsync("tkn");
 
-                var response = await GetActividades(tkn??"", fecha);
+                var response = await GetActividades(tkn ?? "", fecha);
 
                 var borradores = await GetMyBorradores();
 
@@ -155,7 +161,7 @@ namespace ProyectoU3.Services
 
                         _ = MainThread.InvokeOnMainThreadAsync(() =>
                         {
-                            CommunityToolkit.Maui.Alerts.Toast.Make("Actualizado").Show();
+                            Toast.Make("Actualizado Borradores").Show();
                             DatosActualizados?.Invoke();
                         });
                     }
@@ -163,7 +169,7 @@ namespace ProyectoU3.Services
                     Preferences.Set("UltimaFechaActualizacion", response.Max(x => x.fechaActualizacion));
                 }
 
-                if (response!=null)
+                if (response != null)
                 {
                     foreach (var actividad in response)
                     {
@@ -187,7 +193,7 @@ namespace ProyectoU3.Services
                                 else
                                 {
 
-                                    if (actividad.titulo != entidad.titulo || actividad.descripcion !=entidad.descripcion || actividad.estado != entidad.estado || actividad.departamento!=entidad.departamento)
+                                    if (actividad.titulo != entidad.titulo || actividad.descripcion != entidad.descripcion || actividad.estado != entidad.estado || actividad.departamento != entidad.departamento)
                                     {
                                         ActividadesRepository.Update(entidad);
                                         aviso = true;
@@ -204,6 +210,7 @@ namespace ProyectoU3.Services
 
                         _ = MainThread.InvokeOnMainThreadAsync(() =>
                         {
+                            Toast.Make("Actualizado Actividades").Show();
                             DatosActualizados?.Invoke();
                         });
                     }

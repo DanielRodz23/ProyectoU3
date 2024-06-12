@@ -1,6 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Networking;
+using ProyectoU3.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +12,59 @@ using System.Threading.Tasks;
 
 namespace ProyectoU3.ViewModels
 {
-    public partial class ShellViewModel:ObservableObject
+    public partial class ShellViewModel : ObservableObject
     {
+        private readonly DepartamentosService adminService;
+
+        public ShellViewModel(DepartamentosService adminService)
+        {
+            this.adminService = adminService;
+
+            //admincheck = new Thread(CheckAdmin) { IsBackground = true };
+            //admincheck.Start();
+        }
+        Thread admincheck;
+
+        [ObservableProperty]
+        bool isAdmin;
+
+        async void CheckAdmin()
+        {
+            await Task.Run(async () =>
+            {
+                var tkn = SecureStorage.GetAsync("tkn").Result;
+                while (tkn == null)
+                {
+                    tkn = SecureStorage.GetAsync("tkn").Result;
+                    Thread.Sleep(500);
+                }
+                var current = Connectivity.NetworkAccess;
+                if (current == NetworkAccess.Internet)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        IsAdmin = adminService.AdminCheckAsync(tkn).Result;
+                    });
+                }
+                else
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        Snackbar.Make("No hay internet, no se pudo comprobar rol de administrador").Show();
+                    });
+                }
+            });
+        }
+
         [RelayCommand]
-         async Task CerrarSesion()
+        async Task CerrarSesion()
         {
             if (await Shell.Current.DisplayAlert("Cerrar sesión", "Seguro que quieres cerrar sesión?", "Si", "No"))
             {
-                Shell.Current.ToolbarItems.First().IsEnabled = false;
-                await Shell.Current.GoToAsync("//LoginView");
+                //Shell.Current.ToolbarItems.First().IsEnabled = false;
+                //await Shell.Current.GoToAsync("//LoginView");
+                App.Current.MainPage = App.LoginView;
+
                 App.ActividadesService.ActividadesRepository.DeleteAll();
                 Preferences.Clear();
                 SecureStorage.RemoveAll();

@@ -34,12 +34,19 @@ namespace ProyectoU3.Services
             }
             return null;
         }
-        public async Task<bool> Validar(string token)
+        public bool Validar(string token)
         {
-            var hdrs = client.DefaultRequestHeaders;
-            var response = await client.PostAsync("api/Login/Validator", new StringContent(JsonSerializer.Serialize(new { token = token }), Encoding.UTF8, "application/json"));
+            try
+            {
+                var rq = new HttpRequestMessage() { Content = new StringContent(JsonSerializer.Serialize(new { token = token }), Encoding.UTF8, "application/json"), RequestUri = new Uri(client.BaseAddress + "api/login/Validator"), Method = HttpMethod.Post };
+                var response = client.SendAsync(rq).Result;
 
-            return response.IsSuccessStatusCode;
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

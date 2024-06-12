@@ -11,18 +11,19 @@
         <helpers:ConvertUrlToUri x:Key="uri"/>
     </ContentPage.Resources>
     <Grid RowDefinitions="*, 100">
-        <CollectionView ItemsSource="{Binding ListaActividades}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type models:ActividadesDTO}">
-                    <Frame Margin="10">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListActividadesViewModel}}, Path=VerActividadCommand}" CommandParameter="{Binding id}">
-                            </TapGestureRecognizer>
-                        </Frame.GestureRecognizers>
-                        <Grid ColumnDefinitions=".7*, .3*"
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding ListaActividades}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type models:ActividadesDTO}">
+                        <Frame Margin="10">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListActividadesViewModel}}, Path=VerActividadCommand}" CommandParameter="{Binding id}">
+                                </TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
+                            <Grid ColumnDefinitions=".7*, .3*"
                           RowDefinitions="60, 30, Auto, Auto ">
 
-                            <Label Text="{Binding titulo}"
+                                <Label Text="{Binding titulo}"
                                Grid.Column="0"
                                Grid.Row="0"
                                VerticalOptions="Center"
@@ -33,7 +34,7 @@
                                />
 
 
-                            <Label Text="{Binding departamento}"
+                                <Label Text="{Binding departamento}"
                                
                                Grid.Column="1"
                                 Grid.Row="0"
@@ -43,7 +44,7 @@
                                LineBreakMode="TailTruncation"
                                MaxLines="3"
                                />
-                            <Label Text="{Binding fechaRealizacion, StringFormat='{0:MM/dd/yyyy}'}"
+                                <Label Text="{Binding fechaRealizacion, StringFormat='{0:MM/dd/yyyy}'}"
                                Grid.Column="0"
                                Grid.ColumnSpan="2"
                                Grid.Row="1"
@@ -51,53 +52,56 @@
                                HorizontalOptions="Start"
                                FontSize="Micro"
                                />
-                            <Label Text="{Binding descripcion}"
+                                <Label Text="{Binding descripcion}"
                                Grid.Column="0"
                                Grid.ColumnSpan="2"
                                Grid.Row="2"
                                VerticalOptions="Start"
                                HorizontalOptions="Start"
                                />
-                            <!--<Image/>-->
-                            <Image
+                                <!--<Image/>-->
+                                <Image
                                    Aspect="AspectFill"
                                    Grid.ColumnSpan="2"
                                    Grid.Row="3"
                                    >
-                                <Image.Source>
-                                    <UriImageSource Uri="{Binding Url, Converter={StaticResource uri}}"
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Url, Converter={StaticResource uri}}"
                                                     CachingEnabled="True"
                                                     CacheValidity="10:00:00:00"/>
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
         <Frame 
             VerticalOptions="End"
             HeightRequest="100"
             CornerRadius="0"
             Grid.Row="1"
                >
-            <HorizontalStackLayout>
+            
+            <Grid ColumnDefinitions="*, *">
                 <Button 
                     Margin="10"
-                Text="Actividades y Borradores"
+                Text="Acts. y Borradores"
                 Command="{Binding VerBorradoresCommand}"
                 x:Name="ActButton"
                 />
                 <Button 
+                    Grid.Column="1"
                     Margin="10"
-                Text="Agregar Departamento"
+                Text="Departamentos"
                 x:Name="DepButton"
+                    IsVisible="{Binding IsAdmin}"
                 Command="{Binding AgregarDepartamentoCommand}"
                 />
 
-               
-            </HorizontalStackLayout>
+
+            </Grid>
         </Frame>
         <Button
             Grid.Row="1"

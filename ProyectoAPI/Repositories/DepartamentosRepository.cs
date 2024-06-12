@@ -22,5 +22,12 @@ namespace ProyectoAPI.Repositories
         {
             return ctx.Departamentos.Include(x => x.Actividades).FirstOrDefault(x => x.Id == id);
         }
+        public IEnumerable<Departamentos> GetDepartamentos()
+        {
+            var data = ctx.Departamentos.Where(x=>x.Username.Contains("@realmail.com")).ToList();
+            data.ForEach(x => x.Password = "");
+            return data;
+            //return ctx.Departamentos.ForEachAsync(x => x.Password = "");
+        }
     }
 }

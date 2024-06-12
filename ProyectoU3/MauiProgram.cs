@@ -25,6 +25,7 @@ namespace ProyectoU3
 
             //Servicios
             HttpClient client = new HttpClient() { BaseAddress = new Uri("https://doubledapi.labsystec.net/") };
+            //HttpClient client = new HttpClient() { BaseAddress = new Uri("https://localhost:44327/") };
             builder.Services.AddSingleton(client);
             builder.Services.AddTransient<LoginClient>();
 
@@ -44,7 +45,11 @@ namespace ProyectoU3
             builder.Services.AddTransient<VerBorradoresModel>();
             builder.Services.AddTransient<VerBorradorView>();
 
+            builder.Services.AddSingleton<ShellViewModel>();
             builder.Services.AddAutoMapper(typeof(MauiProgram));
+            builder.Services.AddSingleton<DepartamentosService>();
+            builder.Services.AddTransient<AgregarDepartamentoView>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

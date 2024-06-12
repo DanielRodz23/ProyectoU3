@@ -11,10 +11,18 @@ namespace ProyectoU3
             InitializeComponent();
 
             //Routing.RegisterRoute(nameof(ListActividadesView), typeof(ListActividadesView));
-            BindingContext = new ShellViewModel();
-            
+            try
+            {
+                BindingContext = IPlatformApplication.Current.Services.GetService<ShellViewModel>();
+            }
+            catch (Exception)
+            {
+
+                throw new Exception();
+            }
+
         }
 
-        
+
     }
 }

@@ -2,21 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProyectoU3.Views.AgregarDepartamento"
-             Title="AgregarDepartamento">
+             xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
+             xmlns:helpers="clr-namespace:ProyectoU3.Helpers"
+             Title="AgregarDepartamento"
+             x:DataType="vm:AgregarDepartamentoView">
+    <ContentPage.Resources>
+        <helpers:DepartamentoToIdConverter x:Key="dep"></helpers:DepartamentoToIdConverter>
+    </ContentPage.Resources>
     <VerticalStackLayout Spacing="15">
         <Label Text="Agregar Departamento" FontSize="30" HorizontalOptions="Center" />
 
-        <Entry Placeholder="Nombre del Departamento"></Entry>
+        <Entry Placeholder="Nombre del Departamento" Text="{Binding Departamento.Nombre}"></Entry>
 
-        <Entry Placeholder="Usuario"></Entry>
+        <Entry Placeholder="Usuario" Text="{Binding Departamento.Username}"></Entry>
 
-        <Entry Placeholder="Contraseña" IsPassword="True"></Entry>
+        <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Departamento.Password}"></Entry>
 
-        <Picker Title="IdSuperior"></Picker>
+        <Picker Title="IdSuperior" ItemDisplayBinding="{Binding Nombre}" ItemsSource="{Binding Departamentos}" SelectedItem="{Binding Departamento.IdSuperior, Converter={StaticResource dep}}"></Picker>
 
-        <Button Text="Agregar"></Button>
-        
-        
+        <Button Text="Agregar" Command="{Binding AgregarDepartamentoCommand}"></Button>
+
+        <Label TextColor="Red" Text="{Binding Error}"></Label>
         
         
     </VerticalStackLayout>
