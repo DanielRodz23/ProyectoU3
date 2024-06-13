@@ -27,15 +27,16 @@ namespace ProyectoU3
             var tk = SecureStorage.GetAsync("tkn").Result;
             if (tk != null)
             {
-                var state = loginClient.Validar(tk);
-                if (state)
-                {
-                    MainPage = new AppShell();
-                }
-                else
-                {
-                    MainPage = LoginView;
-                }
+                //var state = loginClient.Validar(tk);
+                //if (state)
+                //{
+                //    MainPage = new AppShell();
+                //}
+                //else
+                //{
+                //    MainPage = LoginView;
+                //}
+                MainPage = new AppShell();
             }
             else
             {
