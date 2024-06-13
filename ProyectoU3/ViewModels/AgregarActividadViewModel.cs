@@ -107,7 +107,8 @@ namespace ProyectoU3.ViewModels
                 {
                     Actividad.estado = (int)Estado.Publicado;
                 }
-                
+                await PedirFoto();
+
                 var Insertado = await actividadesService.InsertarActividad(tkn, new InsertAct 
                 {
                     Titulo = Actividad.titulo, 
@@ -119,7 +120,6 @@ namespace ProyectoU3.ViewModels
                 });
                 if (Insertado!=0)
                 {
-                    await PedirFoto();
                     await actividadesService.UploadImagen(Insertado, Base64Imagen);
 
                     await Shell.Current.GoToAsync("//ListaActividadesView");
