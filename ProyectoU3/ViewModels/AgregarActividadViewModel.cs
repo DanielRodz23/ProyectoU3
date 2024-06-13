@@ -80,7 +80,7 @@ namespace ProyectoU3.ViewModels
         }
 
         [RelayCommand]
-        void AgregarActividad()
+        async void AgregarActividad()
         {
             Actividad.fechaRealizacion = new DateOnly(Fecha.Year, Fecha.Month, Fecha.Day);
             //Validar actividad
@@ -108,22 +108,21 @@ namespace ProyectoU3.ViewModels
                     Actividad.estado = (int)Estado.Publicado;
                 }
                 
-                var Insertado = actividadesService.InsertarActividad(tkn, new InsertAct 
+                var Insertado = await actividadesService.InsertarActividad(tkn, new InsertAct 
                 {
                     Titulo = Actividad.titulo, 
-                    Descripcion=Actividad.descripcion,
+                    Descripcion= Actividad.descripcion,
                     Anio=Actividad.fechaRealizacion.Value.Year,
                     Mes = Actividad.fechaRealizacion.Value.Month,
-                    Dia = Actividad.fechaRealizacion.Value.Day
-                }).Result;
+                    Dia = Actividad.fechaRealizacion.Value.Day,
+                    Estado = Actividad.estado,
+                });
                 if (Insertado!=0)
                 {
-                    var pendiente = PedirFoto();
-                    pendiente.Wait();
-                    var pendiente2 = actividadesService.UploadImagen(Insertado, Base64Imagen);
-                    pendiente2.Wait();
+                    await PedirFoto();
+                    await actividadesService.UploadImagen(Insertado, Base64Imagen);
 
-                    Shell.Current.GoToAsync("//ListaActividadesView");
+                    await Shell.Current.GoToAsync("//ListaActividadesView");
                 }
                 else
                 {
