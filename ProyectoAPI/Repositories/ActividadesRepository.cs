@@ -53,11 +53,13 @@ namespace ProyectoAPI.Repositories
         }
         public async Task<IEnumerable<Actividades>> GetMyBorradorAsync(int idUser, DateTime fecha)
         {
-            var query = ctx.Departamentos
-                .Include(x => x.Actividades)
-                .ThenInclude(x=>x.IdDepartamentoNavigation)
-                .Where(x => x.Id == idUser)
-                .Select(x => x.Actividades.Where(e => e.Estado == (int)Estado.Borrador && e.FechaActualizacion>fecha).First());
+            //var query = ctx.Departamentos
+            //    .Include(x => x.Actividades)
+            //    .ThenInclude(x=>x.IdDepartamentoNavigation)
+            //    .Where(x => x.Id == idUser)
+            //    .Select(x => x.Actividades.Where(e => e.Estado == (int)Estado.Borrador && e.FechaActualizacion>fecha).First());
+            var query= ctx.Actividades.Where(x=>x.IdDepartamento==idUser);
+
             return query;
         }
         public async Task<Actividades> GetIncludeDepa(int id)
