@@ -63,11 +63,11 @@ namespace ProyectoU3.ViewModels
             {
                 //Shell.Current.ToolbarItems.First().IsEnabled = false;
                 //await Shell.Current.GoToAsync("//LoginView");
-                App.Current.MainPage = App.LoginView;
 
                 App.ActividadesService.ActividadesRepository.DeleteAll();
                 Preferences.Clear();
                 SecureStorage.RemoveAll();
+                App.Current.MainPage = App.LoginView;
             }
         }
 

@@ -80,7 +80,7 @@ namespace ProyectoU3.ViewModels
         }
 
         [RelayCommand]
-        async void AgregarActividad()
+        void AgregarActividad()
         {
             Actividad.fechaRealizacion = new DateOnly(Fecha.Year, Fecha.Month, Fecha.Day);
             //Validar actividad
@@ -95,7 +95,7 @@ namespace ProyectoU3.ViewModels
             //TODO validar imagen
             ErrorImagen = "";
             ErrorGeneral = "";
-            var tkn = await SecureStorage.GetAsync("tkn");
+            var tkn =  SecureStorage.GetAsync("tkn").Result;
             var actividadValidada = (ErrorTitulo == "" && ErrorDescripcion == "" && ErrorImagen == "" && ErrorFechaRealizacion == "" && ErrorGeneral == "");
             if (actividadValidada && tkn != null)
             {
@@ -108,20 +108,22 @@ namespace ProyectoU3.ViewModels
                     Actividad.estado = (int)Estado.Publicado;
                 }
                 
-                var Insertado = await actividadesService.InsertarActividad(tkn, new InsertAct 
+                var Insertado = actividadesService.InsertarActividad(tkn, new InsertAct 
                 {
                     Titulo = Actividad.titulo, 
                     Descripcion=Actividad.descripcion,
                     Anio=Actividad.fechaRealizacion.Value.Year,
                     Mes = Actividad.fechaRealizacion.Value.Month,
                     Dia = Actividad.fechaRealizacion.Value.Day
-                });
+                }).Result;
                 if (Insertado!=0)
                 {
-                    await PedirFoto();
-                    await actividadesService.UploadImagen(Insertado, Base64Imagen);
+                    var pendiente = PedirFoto();
+                    pendiente.Wait();
+                    var pendiente2 = actividadesService.UploadImagen(Insertado, Base64Imagen);
+                    pendiente2.Wait();
 
-                    await Shell.Current.GoToAsync("//ListaActividadesView");
+                    Shell.Current.GoToAsync("//ListaActividadesView");
                 }
                 else
                 {
