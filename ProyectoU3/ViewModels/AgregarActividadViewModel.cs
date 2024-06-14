@@ -123,6 +123,7 @@ namespace ProyectoU3.ViewModels
                     await actividadesService.UploadImagen(Insertado, Base64Imagen);
 
                     await Shell.Current.GoToAsync("//ListaActividadesView");
+                    IsBorrador = false;
                 }
                 else
                 {
