@@ -44,24 +44,25 @@ namespace ProyectoU3.ViewModels
         private void LlenarMisborradores()
         {
             int id = Preferences.Get("Id", 0);
-            MisActividades.Clear();
+            MisBorradores.Clear();
             var cons = actividadesRepository.GetAll().Where(x=>x.estado==(int)Estado.Borrador && x.idDepartamento == id);
             int can = cons.Count();
             foreach (var item in cons)
             {
-                MisActividades.Add(mapper.Map<ActividadesDTO>(item));
+                MisBorradores.Add(mapper.Map<ActividadesDTO>(item));
             }
         }
 
         private void LlenarMisActividades()
         {
             int id = Preferences.Get("Id", 0);
-            MisBorradores.Clear();
+            MisActividades.Clear();
             var cons = actividadesRepository.GetAll().Where(x => x.estado == (int)Estado.Publicado && x.idDepartamento == id);
             int can = cons.Count();
             foreach (var item in cons)
             {
-                MisBorradores.Add(mapper.Map<ActividadesDTO>(item));
+                var maped = mapper.Map<ActividadesDTO>(item);
+                MisActividades.Add(maped);
             }
         }
 
@@ -77,8 +78,11 @@ namespace ProyectoU3.ViewModels
         {
 
         }
-
-
+        [RelayCommand]
+        void GoBack()
+        {
+            Shell.Current.GoToAsync("//ListaActividadesView");
+        }
 
     }
 }

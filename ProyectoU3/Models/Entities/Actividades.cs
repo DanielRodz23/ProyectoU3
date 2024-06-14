@@ -25,7 +25,7 @@ namespace ProyectoU3.Models.Entities
 
         public DateTime fechaActualizacion { get; set; }
         [NotNull]
-        public int estado { get; set; }
+        public int estado { get; set; } = 0;
         [NotNull]
         public string departamento { get; set; } = null!;
 

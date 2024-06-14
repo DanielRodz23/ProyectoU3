@@ -58,7 +58,7 @@ namespace ProyectoAPI.Repositories
             //    .ThenInclude(x=>x.IdDepartamentoNavigation)
             //    .Where(x => x.Id == idUser)
             //    .Select(x => x.Actividades.Where(e => e.Estado == (int)Estado.Borrador && e.FechaActualizacion>fecha).First());
-            var query= ctx.Actividades.Where(x=>x.IdDepartamento==idUser);
+            var query= ctx.Actividades.Include(x=>x.IdDepartamentoNavigation).Where(x=>x.IdDepartamento==idUser && x.Estado==(int)Estado.Borrador);
 
             return query;
         }
