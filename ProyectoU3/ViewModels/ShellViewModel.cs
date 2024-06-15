@@ -70,6 +70,13 @@ namespace ProyectoU3.ViewModels
                 App.Current.MainPage = App.LoginView;
             }
         }
+        public void Emrg()
+        {
+            App.ActividadesService.ActividadesRepository.DeleteAll();
+            Preferences.Clear();
+            SecureStorage.RemoveAll();
+            App.Current.MainPage = App.LoginView;
+        }
 
     }
 }

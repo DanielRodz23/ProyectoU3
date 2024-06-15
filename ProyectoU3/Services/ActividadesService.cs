@@ -14,6 +14,7 @@ using Uri = System.Uri;
 using Exception = System.Exception;
 using CommunityToolkit.Maui.Alerts;
 using System.Net.Mime;
+using ProyectoU3.ViewModels;
 
 namespace ProyectoU3.Services
 {
@@ -33,7 +34,7 @@ namespace ProyectoU3.Services
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var iact = JsonSerializer.Deserialize<IEnumerable<ActividadesDTO>>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true});
+                var iact = JsonSerializer.Deserialize<IEnumerable<ActividadesDTO>>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                 return iact ?? new List<ActividadesDTO>();
             }
             return null;
@@ -78,6 +79,19 @@ namespace ProyectoU3.Services
                 var json = await response.Content.ReadAsStringAsync();
                 var iact = JsonSerializer.Deserialize<IEnumerable<ActividadesDTO>>(json);
                 return iact ?? null;
+            }
+            else if ((int)response.StatusCode == 444)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    var vm = Shell.Current.BindingContext as ShellViewModel;
+                    if (vm != null)
+                    {
+                        Toast.Make("Usuario eliminado").Show();
+                        vm.Emrg();
+                    }
+                });
+                return null;
             }
             return null;
         }

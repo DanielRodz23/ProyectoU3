@@ -50,7 +50,7 @@ namespace ProyectoAPI.Controllers
             if (idUsuario == null) return BadRequest();
             var currentUser = departamentosRepository.Get(int.Parse(idUsuario.Value));
             //Si el usuario no existe
-            if (currentUser == null) return NotFound();
+            if (currentUser == null) return StatusCode(444);
             var myBorrador = await actividadesRepository.GetMyBorradorAsync(currentUser.Id, fecha??DateTime.MinValue);
             var borradorMapd = mapper.Map<IEnumerable<ActividadesDTO>>(myBorrador);
             return Ok(borradorMapd);

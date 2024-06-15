@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoU3.ViewModels
 {
-    public partial class ListActividadesViewModel: ObservableObject
+    public partial class ListActividadesViewModel : ObservableObject
     {
         public ListActividadesViewModel(ActividadesService actividadesService, ActividadesRepository actividadesRepository, DetallesViewModel detallesViewModel, DepartamentosService adminService)
         {
@@ -81,11 +81,11 @@ namespace ProyectoU3.ViewModels
         void FillList()
         {
             ListaActividades.Clear();
-            var acts = actividadesRepository.GetAll().OrderByDescending(x=>x.fechaRealizacion);
+            var acts = actividadesRepository.GetAll().OrderByDescending(x => x.fechaRealizacion);
             int cant = acts.Count();
             foreach (var item in acts)
             {
-                if (item.estado==(int)Estado.Publicado)
+                if (item.estado == (int)Estado.Publicado)
                     ListaActividades.Add(item);
             }
             //var tkn =  SecureStorage.GetAsync("tkn").Result;
@@ -103,7 +103,14 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         async Task Agregar()
         {
-            await Shell.Current.GoToAsync("//AgregarActividadView");
+            if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+            {
+                await Shell.Current.GoToAsync("//AgregarActividadView");
+            }
+            else
+            {
+                await Toast.Make("No hay internet").Show();
+            }
         }
         [RelayCommand]
         async Task AgregarDepartamento()
