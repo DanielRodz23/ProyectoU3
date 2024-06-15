@@ -134,7 +134,15 @@ namespace ProyectoU3.ViewModels
                 var foto = await PedirFoto();
                 if (foto != null)
                 {
-                    await actividadesService.UploadImagen(id, foto);
+                    var sino = await actividadesService.UploadImagen(id, foto);
+                    if (sino)
+                    {
+                        actividadesService.Invoke();
+                    }
+                    else
+                    {
+                        await Toast.Make("Error al obtener imagen").Show();
+                    }
                 }
                 else
                 {
