@@ -33,9 +33,9 @@
             <!--<Button Text="Agregar Imagen" Command="{Binding PedirFotoCommand}" ></Button>-->
 
 
-            <Button Text="Agegar" Command="{Binding AgregarActividadCommand}"></Button>
+            <Button Text="Publicar" Command="{Binding AgregarActividadCommand}"></Button>
 
-            <Button Text="Guardar como Borrador" Command="{Binding AgregarBorradorCommand}"></Button>
+            <Button Text="Guardar como borrador" Command="{Binding AgregarBorradorCommand}"></Button>
 
             <Label TextColor="Red" Text="{Binding ErrorGeneral}"></Label>
                

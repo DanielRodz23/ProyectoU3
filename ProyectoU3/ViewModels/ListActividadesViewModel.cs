@@ -98,22 +98,22 @@ namespace ProyectoU3.ViewModels
             //    ListaActividades.Add(item);
             //}
         }
+        [ObservableProperty]
+        bool departamentoButtonEnabled = true;
         [RelayCommand]
-        void Agregar()
+        async Task Agregar()
         {
-            Shell.Current.GoToAsync("//AgregarActividadView");
+            await Shell.Current.GoToAsync("//AgregarActividadView");
         }
         [RelayCommand]
-        void AgregarDepartamento()
+        async Task AgregarDepartamento()
         {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                Toast.Make("Se necesita internet para realizar esta acción").Show();
-                return;
-            }
-            var equis = IPlatformApplication.Current.Services.GetService<AgregarDepartamentoView>() ?? new AgregarDepartamentoView(IPlatformApplication.Current.Services.GetService<DepartamentosService>());
-            var view = new AgregarDepartamento(equis);
-            Shell.Current.Navigation.PushAsync(view);
+            DepartamentoButtonEnabled = false;
+            //En realidad este metodo nos lleva a ver los departamentos
+            var vista = new ListaDepartamentosView();
+            await Shell.Current.Navigation.PushAsync(vista);
+            DepartamentoButtonEnabled = true;
+
         }
         [RelayCommand]
         async Task VerActividad(int id)

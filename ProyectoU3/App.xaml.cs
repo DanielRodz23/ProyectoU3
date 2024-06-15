@@ -84,7 +84,7 @@ namespace ProyectoU3
             while (true)
             {
                 await ActividadesService.GetAllAsync();
-                Thread.Sleep(3000);
+                Thread.Sleep(5000);
             }
         }
         async void GoListas()

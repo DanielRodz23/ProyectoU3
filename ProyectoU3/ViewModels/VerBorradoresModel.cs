@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ProyectoU3.Helpers;
@@ -45,7 +46,7 @@ namespace ProyectoU3.ViewModels
         {
             int id = Preferences.Get("Id", 0);
             MisBorradores.Clear();
-            var cons = actividadesRepository.GetAll().Where(x=>x.estado==(int)Estado.Borrador && x.idDepartamento == id);
+            var cons = actividadesRepository.GetAll().Where(x => x.estado == (int)Estado.Borrador && x.idDepartamento == id);
             int can = cons.Count();
             foreach (var item in cons)
             {
@@ -71,13 +72,103 @@ namespace ProyectoU3.ViewModels
         {
 
         }
-
-        //si
         [RelayCommand]
         void VerBorradores(int id)
         {
 
         }
+
+        [RelayCommand]
+        async Task EliminarActividadOrBorrador(int id)
+        {
+            if (await Shell.Current.DisplayAlert("Eliminar", "¿Seguro que quiere eliminarlo?", "Sí", "No"))
+            {
+                var act = actividadesRepository.Get(id);
+                var dto = mapper.Map<ActividadesDTO>(act);
+
+                dto.estado = (int)Estado.Eliminado;
+
+                var equis = await actividadesService.Update(dto);
+                if (equis)
+                {
+                    actividadesRepository.Delete(act);
+                    actividadesService.Invoke();
+                    ActividadesService_DatosActualizados();
+                }
+                else
+                {
+                    await Toast.Make("Hubo un problema al publicar").Show();
+                }
+            }
+        }
+        [RelayCommand]
+        async Task PublicarBorrador(int id)
+        {
+            if (await Shell.Current.DisplayAlert("Publicar", "¿Seguro que quiere publicar este borrador?", "Sí", "No"))
+            {
+                var act = actividadesRepository.Get(id);
+                var dto = mapper.Map<ActividadesDTO>(act);
+
+
+                dto.estado = (int)Estado.Publicado;
+
+                var equis = await actividadesService.Update(dto);
+                if (equis)
+                {
+                    act.estado = (int)Estado.Publicado;
+                    actividadesRepository.Update(act);
+                    actividadesService.Invoke();
+                    ActividadesService_DatosActualizados();
+                }
+                else
+                {
+                    await Toast.Make("Hubo un problema al eliminar").Show();
+                }
+            }
+        }
+        [RelayCommand]
+        async Task CambiarImagen(int id)
+        {
+            if (await Shell.Current.DisplayAlert("Cambiar imagen", "¿Seguro que quiere cambiar la imagen para esta publicación?", "Sí", "No"))
+            {
+                var foto = await PedirFoto();
+                if (foto != null)
+                {
+                    await actividadesService.UploadImagen(id, foto);
+                }
+                else
+                {
+                    await Toast.Make("Error al obtener imagen").Show();
+                }
+            }
+        }
+        async Task<string> PedirFoto()
+        {
+            var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.Android, new[] { "image/png" } }, // MIME type
+            });
+
+            var pickOptions = new PickOptions
+            {
+                PickerTitle = "Agregar Imagen",
+                FileTypes = customFileType
+            };
+
+            var result = await FilePicker.PickAsync(pickOptions);
+
+            if (result == null)
+                return "";
+
+            var stream = await result.OpenReadAsync();
+            var memoryStream = new MemoryStream();
+
+            await stream.CopyToAsync(memoryStream);
+            var imageBytes = memoryStream.ToArray();
+            memoryStream.Close();
+            return Convert.ToBase64String(imageBytes);
+        }
+
         [RelayCommand]
         void GoBack()
         {

@@ -76,7 +76,7 @@ namespace ProyectoAPI.Controllers
             actividadesDTO = mapper.Map<ActividadesDTO>(actividades);
             return Ok(actividadesDTO);
         }
-        [HttpPut]
+        [HttpPost("Update")]
         public async Task<ActionResult> UpdateActividad(ActividadesDTO actividadesDTO)
         {
             //Teoricamente es para agregar una actividad que ya estaba como borrador
@@ -90,14 +90,9 @@ namespace ProyectoAPI.Controllers
 
             actividad.Titulo = actividadesDTO.Titulo;
             actividad.Descripcion = actividadesDTO.Descripcion;
-            actividad.FechaRealizacion = actividadesDTO.FechaRealizacion;
-            actividad.FechaActualizacion = DateTime.UtcNow;
             actividad.Estado = actividadesDTO.Estado;
-            if (actividad.Estado == (int)Estado.Publicado) actividad.FechaCreacion = DateTime.UtcNow;
-            else { actividad.FechaCreacion = actividadesDTO.FechaCreacion; }
 
             //TODO validar
-            actividad.IdDepartamento = int.Parse(claimtkn.Value);
             actividadesRepository.Update(actividad);
             return Ok();
 

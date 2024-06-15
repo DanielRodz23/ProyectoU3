@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ProyectoU3.Helpers;
 using ProyectoU3.Models.DTOs;
@@ -59,7 +60,7 @@ namespace ProyectoU3.ViewModels
             var result = await FilePicker.PickAsync(pickOptions);
 
             if (result == null)
-                return ;
+                return;
 
             var stream = await result.OpenReadAsync();
             var memoryStream = new MemoryStream();
@@ -82,56 +83,63 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         async void AgregarActividad()
         {
-            Actividad.fechaRealizacion = new DateOnly(Fecha.Year, Fecha.Month, Fecha.Day);
-            //Validar actividad
-            //[ObservableProperty] string errorTitulo;
-            if (string.IsNullOrWhiteSpace(Actividad.titulo)) ErrorTitulo = "El titulo no es valido"; else { ErrorTitulo = ""; }
-            //[ObservableProperty] string errorDescripcion;
-            if (string.IsNullOrWhiteSpace(Actividad.descripcion)) ErrorDescripcion = "La descripcion no es valida"; else { ErrorDescripcion = ""; }
-            //[ObservableProperty] string errorFechaRealizacion;
-            //var fecha = Actividad.fechaRealizacion??new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            if (Fecha >= DateTime.Today || Fecha < new DateTime(1990, 1, 1)) ErrorFechaRealizacion = "La fecha no es valida"; else { ErrorFechaRealizacion = ""; }
-
-            //TODO validar imagen
-            ErrorImagen = "";
-            ErrorGeneral = "";
-            var tkn =  SecureStorage.GetAsync("tkn").Result;
-            var actividadValidada = (ErrorTitulo == "" && ErrorDescripcion == "" && ErrorImagen == "" && ErrorFechaRealizacion == "" && ErrorGeneral == "");
-            if (actividadValidada && tkn != null)
+            if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
             {
-                if (IsBorrador)
-                {
-                    Actividad.estado = (int)Estado.Borrador;
-                }
-                else
-                {
-                    Actividad.estado = (int)Estado.Publicado;
-                }
-                await PedirFoto();
+                Actividad.fechaRealizacion = new DateOnly(Fecha.Year, Fecha.Month, Fecha.Day);
+                //Validar actividad
+                //[ObservableProperty] string errorTitulo;
+                if (string.IsNullOrWhiteSpace(Actividad.titulo)) ErrorTitulo = "El titulo no es valido"; else { ErrorTitulo = ""; }
+                //[ObservableProperty] string errorDescripcion;
+                if (string.IsNullOrWhiteSpace(Actividad.descripcion)) ErrorDescripcion = "La descripcion no es valida"; else { ErrorDescripcion = ""; }
+                //[ObservableProperty] string errorFechaRealizacion;
+                //var fecha = Actividad.fechaRealizacion??new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                if (Fecha >= DateTime.Today || Fecha < new DateTime(1990, 1, 1)) ErrorFechaRealizacion = "La fecha no es valida"; else { ErrorFechaRealizacion = ""; }
 
-                var Insertado = await actividadesService.InsertarActividad(tkn, new InsertAct 
+                //TODO validar imagen
+                ErrorImagen = "";
+                ErrorGeneral = "";
+                var tkn = SecureStorage.GetAsync("tkn").Result;
+                var actividadValidada = (ErrorTitulo == "" && ErrorDescripcion == "" && ErrorImagen == "" && ErrorFechaRealizacion == "" && ErrorGeneral == "");
+                if (actividadValidada && tkn != null)
                 {
-                    Titulo = Actividad.titulo, 
-                    Descripcion= Actividad.descripcion,
-                    Anio=Actividad.fechaRealizacion.Value.Year,
-                    Mes = Actividad.fechaRealizacion.Value.Month,
-                    Dia = Actividad.fechaRealizacion.Value.Day,
-                    Estado = Actividad.estado,
-                });
-                if (Insertado!=0)
-                {
-                    await actividadesService.UploadImagen(Insertado, Base64Imagen);
+                    if (IsBorrador)
+                    {
+                        Actividad.estado = (int)Estado.Borrador;
+                    }
+                    else
+                    {
+                        Actividad.estado = (int)Estado.Publicado;
+                    }
+                    await PedirFoto();
 
-                    await Shell.Current.GoToAsync("//ListaActividadesView");
-                    IsBorrador = false;
-                }
-                else
-                {
-                    ErrorGeneral = "Hubo un error en el envio de datos";
-                }
+                    var Insertado = await actividadesService.InsertarActividad(tkn, new InsertAct
+                    {
+                        Titulo = Actividad.titulo,
+                        Descripcion = Actividad.descripcion,
+                        Anio = Actividad.fechaRealizacion.Value.Year,
+                        Mes = Actividad.fechaRealizacion.Value.Month,
+                        Dia = Actividad.fechaRealizacion.Value.Day,
+                        Estado = Actividad.estado,
+                    });
+                    if (Insertado != 0)
+                    {
+                        await actividadesService.UploadImagen(Insertado, Base64Imagen);
 
+                        await Shell.Current.GoToAsync("//ListaActividadesView");
+                    }
+                    else
+                    {
+                        ErrorGeneral = "Hubo un error en el envio de datos";
+                    }
+
+                }
             }
-
+            else
+            {
+                await Toast.Make("No hay internet para agregar una nueva actividad").Show();
+            }
+            IsBorrador = false;
+            Actividad = new();
         }
         [RelayCommand]
         void GoBack()

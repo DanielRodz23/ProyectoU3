@@ -50,6 +50,8 @@ namespace ProyectoU3
             builder.Services.AddSingleton<DepartamentosService>();
             builder.Services.AddTransient<AgregarDepartamentoView>();
 
+
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

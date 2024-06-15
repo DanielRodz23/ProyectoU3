@@ -96,6 +96,7 @@
                     Margin="10"
                 Text="Departamentos"
                 x:Name="DepButton"
+                                IsEnabled="{Binding DepartamentoButtonEnabled}"
                     IsVisible="{Binding IsAdmin}"
                 Command="{Binding AgregarDepartamentoCommand}"
                 />

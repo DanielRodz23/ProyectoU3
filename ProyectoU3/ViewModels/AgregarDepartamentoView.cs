@@ -76,7 +76,7 @@ namespace ProyectoU3.ViewModels
                 {
                     //Navegar hacia atras
                     Shell.Current.Navigation.PopAsync();
-
+                    Shell.Current.Navigation.PopAsync();
                 }
             }
         }

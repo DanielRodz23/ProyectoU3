@@ -63,5 +63,15 @@ namespace ProyectoU3.Services
             var response = client.SendAsync(rq).Result;
             return response.IsSuccessStatusCode;
         }
+        public bool DeleteDepartment(int id)
+        {
+            var token = SecureStorage.GetAsync("tkn").Result;
+            var rq = new HttpRequestMessage();
+            rq.Method = HttpMethod.Get;
+            rq.Headers.Add("Authorization", $"Bearer {token}");
+            rq.RequestUri = new Uri(client.BaseAddress + "api/Departamentos/Delete/" + $"{id.ToString()}");
+            var response = client.SendAsync(rq).Result;
+            return response.IsSuccessStatusCode;
+        }
     }
 }

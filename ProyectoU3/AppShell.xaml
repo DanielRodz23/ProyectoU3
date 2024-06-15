@@ -9,6 +9,9 @@
     Shell.FlyoutBehavior="Disabled"
     x:DataType="{x:Type vm:ShellViewModel}"
     Title="ProyectoU3">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="True"/>
+    </Shell.BackButtonBehavior>
     <Shell.ToolbarItems>
         <ToolbarItem Text="Cerrar sesion" Order="Primary" Command="{Binding CerrarSesionCommand}"></ToolbarItem>
     </Shell.ToolbarItems>   

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Uri = System.Uri;
 using Exception = System.Exception;
 using CommunityToolkit.Maui.Alerts;
+using System.Net.Mime;
 
 namespace ProyectoU3.Services
 {
@@ -95,6 +96,23 @@ namespace ProyectoU3.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> Update(ActividadesDTO dTO)
+        {
+            var token = await SecureStorage.GetAsync("tkn");
+            HttpRequestMessage rq = new HttpRequestMessage();
+            rq.Method = HttpMethod.Post;
+            rq.RequestUri = new Uri(client.BaseAddress + "api/Actividades/Update");
+            rq.Headers.Add("Authorization", $"Bearer {token}");
+            rq.Content = new StringContent(JsonSerializer.Serialize(dTO, JsonConfig.Options), Encoding.UTF8, MediaTypeNames.Application.Json);
+            var response = await client.SendAsync(rq);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public void Invoke()
+        {
+            DatosActualizados?.Invoke();
+        }
 
         #region SQLite
         public event Action? DatosActualizados;

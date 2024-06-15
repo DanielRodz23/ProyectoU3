@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoU3.Views.ListaDepartamentosView"
+             xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
+             xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
+             x:DataType="vm:ListaDepartamentosViewModel"
+             Title="Departamentos">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="True" IsEnabled="True">
+        </BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+  
+    <Grid>
+        <CollectionView ItemsSource="{Binding Departamentos}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:DepartamentosDTO">
+                    <SwipeView Margin="5">
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Eliminar" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListaDepartamentosViewModel}},Path= EliminarDepartementoCommand}" CommandParameter="{Binding Id }"></SwipeItem>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame BorderColor="Black" >
+                            <StackLayout >
+                                <Label Text="{Binding Nombre}" FontSize="Header" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            Text="+"
+            FontSize="30"
+            FontAttributes="Bold"
+            HeightRequest="60"
+            WidthRequest="60"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="0,0,30,120"
+            CornerRadius="40"
+            Command="{Binding VerAgregarDepartamentoCommand}"
+            />    
+    </Grid>
+</ContentPage>
