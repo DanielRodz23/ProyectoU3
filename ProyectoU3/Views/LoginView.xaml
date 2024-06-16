@@ -5,27 +5,43 @@
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              Title="LoginView"
              x:DataType="{x:Type vm:LoginViewModel}">
-    <VerticalStackLayout>
 
-        <Label Text="Bienvenido" FontSize="60" HorizontalOptions="Center" />
+    <Grid RowDefinitions="auto,auto,*">
+        <Label Text="Bienvenido" FontSize="60" HorizontalOptions="Center"  />
 
-        <Label Text="Inicar sesión" FontSize="30" HorizontalOptions="Center"/>
+        <Label Text="Inicar sesión" FontSize="30" HorizontalOptions="Center" Margin="0,0,0,100" Grid.Row="1"/>
+        
+        <VerticalStackLayout VerticalOptions="Center" Grid.RowSpan="3" MaximumWidthRequest="350" Spacing="20">
 
-        <Entry Text="{Binding Username}" Placeholder="usuario@realmail.com" HorizontalTextAlignment="Center"/>
+            <Frame Padding="4">
+                
+            <Entry Text="{Binding Username}" Placeholder="Usuario" />
+                
+            </Frame>
 
-        <Entry Text="{Binding Password}" Placeholder="contraseña" IsPassword="True"  HorizontalTextAlignment="Center" />
+            <Frame Padding="4">
+            <Entry Text="{Binding Password}" Placeholder="Contraseña" IsPassword="True" />
+            </Frame>
 
-        <Button Text="Iniciar" 
-                HeightRequest="50"
-                WidthRequest="200" 
-                HorizontalOptions="Center" 
-                VerticalOptions="Center" 
-                IsEnabled="{Binding IsEnabled}"
-                Command="{Binding LoginCommand}"/>
 
-        <Label Text="{Binding Error}"
-               HorizontalOptions="Center"
-               TextColor="Red"
-               />
-    </VerticalStackLayout>
+
+
+            <Button Text="Iniciar" 
+            HeightRequest="50"
+            WidthRequest="200" 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center" 
+            IsEnabled="{Binding IsEnabled}"
+            Command="{Binding LoginCommand}"/>
+
+            <Label Text="{Binding Error}"
+           HorizontalOptions="Center"
+           TextColor="Red"
+           />
+        </VerticalStackLayout>
+
+
+
+    </Grid>
+    
 </ContentPage>

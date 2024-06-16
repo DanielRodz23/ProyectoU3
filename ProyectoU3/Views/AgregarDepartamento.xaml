@@ -4,7 +4,7 @@
              x:Class="ProyectoU3.Views.AgregarDepartamento"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              xmlns:helpers="clr-namespace:ProyectoU3.Helpers"
-             Title="AgregarDepartamento"
+             Title=""
              x:DataType="vm:AgregarDepartamentoView">
     <ContentPage.Resources>
         <helpers:DepartamentoToIdConverter x:Key="dep"></helpers:DepartamentoToIdConverter>
