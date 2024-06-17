@@ -9,14 +9,14 @@
     <ContentPage.Resources>
         <helpers:ConvertUrlToUri x:Key="uri"/>
     </ContentPage.Resources>
-    <Grid BackgroundColor="White">
-        <VerticalStackLayout >
-            <Label Text="{Binding ActividadesDTO.fechaRealizacion, StringFormat='{0:MM/dd/yyyy}'}" HorizontalOptions="End" Margin="2"></Label>
-            <Label Text="{Binding ActividadesDTO.titulo}" FontSize="25" Margin="0,8,0,5" FontAttributes="Bold" ></Label>
-            <Label Text="{Binding ActividadesDTO.departamento}" Margin="1,0,0,10" FontSize="20"></Label>
-            <Label Text="{Binding ActividadesDTO.descripcion}" FontSize="16" Margin="1,-8,0,10" ></Label>
-            <Image Aspect="AspectFill">
-                <Image.Source >
+    <Grid>
+        <VerticalStackLayout>
+            <Label Text="{Binding ActividadesDTO.titulo}"></Label>
+            <Label Text="{Binding ActividadesDTO.fechaRealizacion, StringFormat='{0:MM/dd/yyyy}'}"></Label>
+            <Label Text="{Binding ActividadesDTO.departamento}"></Label>
+            <Label Text="{Binding ActividadesDTO.descripcion}"></Label>
+            <Image>
+                <Image.Source>
                     <UriImageSource Uri="{Binding ActividadesDTO.Url, Converter={StaticResource uri}}"
                     CachingEnabled="True"
                     CacheValidity="14"/>
@@ -24,6 +24,6 @@
             </Image>
 
         </VerticalStackLayout>
-        <Button HeightRequest="40" WidthRequest="365" VerticalOptions="End" Margin="0,0,0,1" Text="Regresar" Command="{Binding RegresarCommand}"/>
+        <Button HeightRequest="40" WidthRequest="120" VerticalOptions="End" Margin="0,0,0,80" Text="Regresar" Command="{Binding RegresarCommand}"/>
     </Grid>
 </ContentPage>

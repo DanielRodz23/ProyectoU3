@@ -50,10 +50,6 @@ namespace ProyectoU3
 
         public static ActividadesService ActividadesService { get; set; }
         public static LoginView LoginView { get; set; }
-        //public static void CambiarALogin()
-        //{
-        //    MainPage = LoginView;
-        //}
 
         async void CheckAdmin()
         {

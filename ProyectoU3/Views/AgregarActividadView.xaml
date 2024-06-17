@@ -4,7 +4,7 @@
              x:Class="ProyectoU3.Views.AgregarActividadView"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              x:DataType="{x:Type vm:AgregarActividadViewModel}"
-             Title="">
+             Title="Agregar Actividad">
     <Grid RowDefinitions=".05*, *">
         <ImageButton 
             Grid.Row="0"
@@ -17,7 +17,7 @@
             Command="{Binding GoBackCommand}"
             />
         <VerticalStackLayout Spacing="10" Grid.Row="1">
-            <Label Text="Agregar Actividad" HorizontalOptions="Center" FontSize="40" Margin="0,15" />
+            <Label Text="Agregar Actividad" HorizontalOptions="Center" FontSize="40" />
 
             <Entry Placeholder="Titulo de la la Actividad" Text="{Binding Actividad.titulo}"></Entry>
             <Label TextColor="Red" Text="{Binding ErrorTitulo}"></Label>
@@ -33,9 +33,9 @@
             <!--<Button Text="Agregar Imagen" Command="{Binding PedirFotoCommand}" ></Button>-->
 
 
-            <Button Text="Publicar" Command="{Binding AgregarActividadCommand}" Margin="0,15"></Button>
+            <Button Text="Publicar" Command="{Binding AgregarActividadCommand}"></Button>
 
-            <Button Text="Guardar como borrador" Command="{Binding AgregarBorradorCommand}" Margin="0,15"></Button>
+            <Button Text="Guardar como borrador" Command="{Binding AgregarBorradorCommand}"></Button>
 
             <Label TextColor="Red" Text="{Binding ErrorGeneral}"></Label>
                

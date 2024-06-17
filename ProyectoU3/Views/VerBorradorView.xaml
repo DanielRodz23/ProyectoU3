@@ -4,7 +4,7 @@
              x:Class="ProyectoU3.Views.VerBorradorView"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
-             Title="Actividades y Borradores"
+             Title="VerBorradorView"
              x:DataType="{x:Type vm:VerBorradoresModel}">
 
     <Grid RowDefinitions=".1*, *" BackgroundColor="LightGrey">
@@ -36,18 +36,17 @@
                                             <SwipeItem Text="Cambiar imagen" BackgroundColor="Orange" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VerBorradoresModel}},Path= CambiarImagenCommand}" CommandParameter="{Binding id }"></SwipeItem>
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Frame Margin="10" BackgroundColor="Wheat" BorderColor="Black">
+                                    <Frame Margin="10">
                                         <Grid ColumnDefinitions=".7*, .3*"
-                                             RowDefinitions="60, 30, Auto, Auto ">
+            RowDefinitions="60, 30, Auto, Auto ">
                                             <Label Text="{Binding titulo}"
-                                                     Grid.Column="0"
-                                                     Grid.Row="0"
-                                                     VerticalOptions="Center"
-                                                     HorizontalOptions="Start"
-                                                     FontSize="Large"
-                                                     MaxLines="1"
-                                                   TextColor="Black"
-                                                     LineBreakMode="TailTruncation"/>       
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Start"
+                 FontSize="Large"
+                 MaxLines="1"
+                 LineBreakMode="TailTruncation"/>
                                         </Grid>
                                     </Frame>
                                 </SwipeView>
@@ -74,7 +73,7 @@
                                             <SwipeItem Text="Publicar borrador" BackgroundColor="Orange" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VerBorradoresModel}},Path= PublicarBorradorCommand}" CommandParameter="{Binding id }"></SwipeItem>
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Frame Margin="10" BackgroundColor="LightCoral" BorderColor="Black">
+                                    <Frame Margin="10">
                                         <Grid ColumnDefinitions=".7*, .3*"
             RowDefinitions="60, 30, Auto, Auto ">
                                             <Label Text="{Binding titulo}"
