@@ -73,6 +73,11 @@ namespace ProyectoAPI.Controllers
             {
                 actividadesRepository.Delete(item);
             }
+            foreach (var item in usuario.InverseIdSuperiorNavigation.ToList())
+            {
+                item.IdSuperior = usuario.IdSuperior;
+                departamentosRepository.Update(item);
+            }
             departamentosRepository.Delete(id);
             return Ok();
         }

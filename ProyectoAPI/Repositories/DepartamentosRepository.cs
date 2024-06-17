@@ -20,7 +20,7 @@ namespace ProyectoAPI.Repositories
         }
         public async Task<Departamentos?> GetIncludeActividades(int id)
         {
-            return ctx.Departamentos.Include(x => x.Actividades).FirstOrDefault(x => x.Id == id);
+            return ctx.Departamentos.Include(x => x.Actividades).Include(x=>x.InverseIdSuperiorNavigation).FirstOrDefault(x => x.Id == id);
         }
         public IEnumerable<Departamentos> GetDepartamentos()
         {

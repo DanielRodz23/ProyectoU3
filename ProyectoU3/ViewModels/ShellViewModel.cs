@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Networking;
 using ProyectoU3.Services;
+using ProyectoU3.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,10 +65,13 @@ namespace ProyectoU3.ViewModels
                 //Shell.Current.ToolbarItems.First().IsEnabled = false;
                 //await Shell.Current.GoToAsync("//LoginView");
 
-                App.ActividadesService.ActividadesRepository.DeleteAll();
-                Preferences.Clear();
-                SecureStorage.RemoveAll();
-                App.Current.MainPage = App.LoginView;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    App.ActividadesService.ActividadesRepository.DeleteAll();
+                    Preferences.Clear();
+                    SecureStorage.RemoveAll();
+                    App.Current.MainPage= App.LoginView;
+                });
             }
         }
         public void Emrg()
