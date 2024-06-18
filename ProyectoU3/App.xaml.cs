@@ -51,6 +51,10 @@ namespace ProyectoU3
         public static ActividadesService ActividadesService { get; set; }
         public static LoginView LoginView { get; set; }
 
+        public static async Task CargarDatos()
+        {
+            await ActividadesService.GetAllAsync();
+        }
         async void CheckAdmin()
         {
             await Task.Run(async () =>

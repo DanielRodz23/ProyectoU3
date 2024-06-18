@@ -18,7 +18,7 @@
 
         <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Departamento.Password}"></Entry>
 
-        <Picker Title="IdSuperior" ItemDisplayBinding="{Binding Nombre}" ItemsSource="{Binding Departamentos}" SelectedItem="{Binding Departamento.IdSuperior, Converter={StaticResource dep}}"></Picker>
+        <Picker Title="Jefe directo" ItemDisplayBinding="{Binding Nombre}" ItemsSource="{Binding Departamentos}" SelectedItem="{Binding Departamento.IdSuperior, Converter={StaticResource dep}}"></Picker>
 
         <Button Text="Agregar" Command="{Binding AgregarDepartamentoCommand}"></Button>
 

@@ -43,7 +43,7 @@ namespace ProyectoU3.Services
             {
                 var json = response.Content.ReadAsStringAsync().Result;
                 var data = JsonSerializer.Deserialize<IEnumerable<DepartamentosDTO>>(json, JsonConfig.Options);
-                return data?? Enumerable.Empty<DepartamentosDTO>();
+                return data ?? Enumerable.Empty<DepartamentosDTO>();
             }
             else
             {
@@ -72,6 +72,24 @@ namespace ProyectoU3.Services
             rq.RequestUri = new Uri(client.BaseAddress + "api/Departamentos/Delete/" + $"{id.ToString()}");
             var response = client.SendAsync(rq).Result;
             return response.IsSuccessStatusCode;
+        }
+
+        public string GetDepartamento()
+        {
+            var token = SecureStorage.GetAsync("tkn").Result;
+            var rq = new HttpRequestMessage();
+            rq.Method = HttpMethod.Get;
+            rq.Headers.Add("Authorization", $"Bearer {token}");
+            rq.RequestUri = new Uri(client.BaseAddress + "api/Departamentos/nombre");
+            var response = client.SendAsync(rq).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var nombre = response.Content.ReadAsStringAsync().Result;
+                SecureStorage.SetAsync("name", nombre);
+                return nombre;
+            }
+            Toast.Make("No fue posible cargar el departamento").Show();
+            return "User";
         }
     }
 }

@@ -1,19 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoAPI.Repositories;
 
 namespace ProyectoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ImageController : ControllerBase
     {
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ActividadesRepository actividadesRepository;
 
-        public ImageController(IWebHostEnvironment webHostEnvironment)
+        public ImageController(IWebHostEnvironment webHostEnvironment, ActividadesRepository actividadesRepository)
         {
             this.webHostEnvironment = webHostEnvironment;
+            this.actividadesRepository = actividadesRepository;
         }
         [HttpPost("{id:int}")]
         public async Task<IActionResult> UploadImage([FromRoute]int id, [FromBody] string imgBase64)
@@ -38,8 +41,23 @@ namespace ProyectoAPI.Controllers
             }
 
             var savePath = Path.Combine(webHostEnvironment.WebRootPath, "Images", id.ToString() + ".png");
+            
+            var act = actividadesRepository.Get(id);
+
+
+            var descori = act.Descripcion;
+
+            act.Descripcion = "";
+
+            actividadesRepository.Update(act);
+
+            act.Descripcion = descori;
+
+            actividadesRepository.Update(act);
 
             await System.IO.File.WriteAllBytesAsync(savePath, imgBytes);
+
+
 
             return Ok();
         }

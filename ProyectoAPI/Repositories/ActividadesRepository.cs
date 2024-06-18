@@ -49,7 +49,7 @@ namespace ProyectoAPI.Repositories
                 }
             }
             //var hijos = ctx.
-            return listactividades.Where(x=>x.FechaActualizacion>fecha && x.Estado == (int)Estado.Publicado).OrderByDescending(x=>x.FechaRealizacion);
+            return listactividades.Where(x=>x.FechaActualizacion>fecha &&( x.Estado == (int)Estado.Publicado || x.Estado ==(int)Estado.Eliminado)).OrderByDescending(x=>x.FechaRealizacion);
         }
         public async Task<IEnumerable<Actividades>> GetMyBorradorAsync(int idUser, DateTime fecha)
         {

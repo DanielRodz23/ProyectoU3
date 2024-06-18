@@ -12,7 +12,7 @@
     </Shell.BackButtonBehavior>
   
     <Grid>
-        <CollectionView ItemsSource="{Binding Departamentos}">
+        <CollectionView ItemsSource="{Binding Departamentos}" EmptyView="No hay departamentos">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:DepartamentosDTO">
                     <SwipeView Margin="5">

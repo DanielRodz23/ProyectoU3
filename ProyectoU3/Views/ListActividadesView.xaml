@@ -12,7 +12,7 @@
     </ContentPage.Resources>
     <Grid RowDefinitions="*, 100">
         <ScrollView>
-            <CollectionView ItemsSource="{Binding ListaActividades}">
+            <CollectionView ItemsSource="{Binding ListaActividades}" EmptyView="No hay actividades">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type models:ActividadesDTO}">
                         <Frame Margin="10">

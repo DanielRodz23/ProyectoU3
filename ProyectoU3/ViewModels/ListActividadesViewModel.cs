@@ -82,7 +82,9 @@ namespace ProyectoU3.ViewModels
         {
             ListaActividades.Clear();
             var acts = actividadesRepository.GetAll().OrderByDescending(x => x.fechaRealizacion);
+#if DEBUG
             int cant = acts.Count();
+#endif
             foreach (var item in acts)
             {
                 if (item.estado == (int)Estado.Publicado)

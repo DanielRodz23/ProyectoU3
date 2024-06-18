@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Platform;
 using ProyectoU3.Models.LoginModels;
@@ -55,9 +56,13 @@ namespace ProyectoU3.ViewModels
             //}
         }
         [RelayCommand]
-        async void Login()
+        async Task Login()
         {
-            IsEnabled = false;
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsEnabled = false;
+                Toast.Make("Cargando datos").Show();
+            });
             if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
             {
                 var token = await loginClient.GetToken(new LoginModel { username = Username.ToLower(), password = Password });
@@ -67,9 +72,10 @@ namespace ProyectoU3.ViewModels
                     await SecureStorage.SetAsync("tkn", token);
                     App.Current.MainPage = new AppShell();
                     //actividadesService.GetAllAsync().Wait();
+                    await App.CargarDatos();
                     await Shell.Current.GoToAsync("//ListaActividadesView");
                     //Shell.Current.ToolbarItems.Add(new ToolbarItem() { Text = "Cerrar sesion", Order = ToolbarItemOrder.Secondary, Command = (Shell.Current.BindingContext as ShellViewModel).CerrarSesionCommand });
-                    Shell.Current.ToolbarItems.First().IsEnabled = true;
+                    //Shell.Current.ToolbarItems.First().IsEnabled = true;
 
                     Username = "";
                     Password = "";

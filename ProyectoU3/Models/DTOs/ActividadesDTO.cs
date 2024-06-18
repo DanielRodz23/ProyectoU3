@@ -26,7 +26,13 @@ namespace ProyectoU3.Models.DTOs
 
         public string departamento { get; set; } = null!;
 
-        public string Url { get { return "https://doubledapi.labsystec.net/Images/" + id.ToString() + ".png"; } }
+        public string Url
+        {
+            get
+            {
+                return "https://doubledapi.labsystec.net/Images/" + id.ToString() + ".png?fecha=" + fechaActualizacion.Date.ToString();
+            }
+        }
 
     }
 }

@@ -4,7 +4,7 @@
              x:Class="ProyectoU3.Views.VerBorradorView"
              xmlns:vm="clr-namespace:ProyectoU3.ViewModels"
              xmlns:models="clr-namespace:ProyectoU3.Models.DTOs"
-             Title="VerBorradorView"
+             Title="Actividades y borradores"
              x:DataType="{x:Type vm:VerBorradoresModel}">
 
     <Grid RowDefinitions=".1*, *" BackgroundColor="LightGrey">
@@ -22,7 +22,7 @@
             <Grid Grid.Row="0" RowDefinitions="Auto, *">
                 <Label Margin="20,0,0,0" FontSize="Medium" FontAttributes="Bold" Text="Mis actividades" Grid.Row="0"></Label>
                 <ScrollView Grid.Row="1">
-                    <CollectionView ItemsSource="{Binding MisActividades}">
+                    <CollectionView ItemsSource="{Binding MisActividades}" EmptyView="No has publicado actividades">
                         <CollectionView.ItemTemplate>
                             <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
                                 <SwipeView>
@@ -59,7 +59,7 @@
             <Grid Grid.Row="1" RowDefinitions="Auto, *">
                 <Label Margin="20,0,0,0" FontSize="Medium" FontAttributes="Bold" Text="Mis borradores" Grid.Row="0"></Label>
                 <ScrollView Grid.Row="1">
-                    <CollectionView ItemsSource="{Binding MisBorradores}" >
+                    <CollectionView ItemsSource="{Binding MisBorradores}" EmptyView="No hay actividades en borrador" >
                         <CollectionView.ItemTemplate>
                             <DataTemplate  x:DataType="{x:Type models:ActividadesDTO}">
                                 <SwipeView>

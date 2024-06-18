@@ -81,73 +81,97 @@ namespace ProyectoU3.ViewModels
         [RelayCommand]
         async Task EliminarActividadOrBorrador(int id)
         {
-            if (await Shell.Current.DisplayAlert("Eliminar", "¿Seguro que quiere eliminarlo?", "Sí", "No"))
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                var act = actividadesRepository.Get(id);
-                var dto = mapper.Map<ActividadesDTO>(act);
 
-                dto.estado = (int)Estado.Eliminado;
+                if (await Shell.Current.DisplayAlert("Eliminar", "¿Seguro que quiere eliminarlo?", "Sí", "No"))
+                {
+                    var act = actividadesRepository.Get(id);
+                    var dto = mapper.Map<ActividadesDTO>(act);
 
-                var equis = await actividadesService.Update(dto);
-                if (equis)
-                {
-                    actividadesRepository.Delete(act);
-                    actividadesService.Invoke();
-                    ActividadesService_DatosActualizados();
+                    dto.estado = (int)Estado.Eliminado;
+
+                    var equis = await actividadesService.Update(dto);
+                    if (equis)
+                    {
+                        actividadesRepository.Delete(act);
+                        actividadesService.Invoke();
+                        ActividadesService_DatosActualizados();
+                    }
+                    else
+                    {
+                        await Toast.Make("Hubo un problema al publicar").Show();
+                    }
                 }
-                else
-                {
-                    await Toast.Make("Hubo un problema al publicar").Show();
-                }
+            }
+            else
+            {
+                await Toast.Make("No hay internet").Show();
             }
         }
         [RelayCommand]
         async Task PublicarBorrador(int id)
         {
-            if (await Shell.Current.DisplayAlert("Publicar", "¿Seguro que quiere publicar este borrador?", "Sí", "No"))
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                var act = actividadesRepository.Get(id);
-                var dto = mapper.Map<ActividadesDTO>(act);
-
-
-                dto.estado = (int)Estado.Publicado;
-
-                var equis = await actividadesService.Update(dto);
-                if (equis)
+                if (await Shell.Current.DisplayAlert("Publicar", "¿Seguro que quiere publicar este borrador?", "Sí", "No"))
                 {
-                    act.estado = (int)Estado.Publicado;
-                    actividadesRepository.Update(act);
-                    actividadesService.Invoke();
-                    ActividadesService_DatosActualizados();
+                    var act = actividadesRepository.Get(id);
+                    var dto = mapper.Map<ActividadesDTO>(act);
+
+
+                    dto.estado = (int)Estado.Publicado;
+
+                    var equis = await actividadesService.Update(dto);
+                    if (equis)
+                    {
+                        act.estado = (int)Estado.Publicado;
+                        actividadesRepository.Update(act);
+                        actividadesService.Invoke();
+                        ActividadesService_DatosActualizados();
+                    }
+                    else
+                    {
+                        await Toast.Make("Hubo un problema al eliminar").Show();
+                    }
                 }
-                else
-                {
-                    await Toast.Make("Hubo un problema al eliminar").Show();
-                }
+            }
+            else
+            {
+                await Toast.Make("No hay internet").Show();
             }
         }
         [RelayCommand]
         async Task CambiarImagen(int id)
         {
-            if (await Shell.Current.DisplayAlert("Cambiar imagen", "¿Seguro que quiere cambiar la imagen para esta publicación?", "Sí", "No"))
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                var foto = await PedirFoto();
-                if (foto != null)
+                if (await Shell.Current.DisplayAlert("Cambiar imagen", "¿Seguro que quiere cambiar la imagen para esta publicación?", "Sí", "No"))
                 {
-                    var sino = await actividadesService.UploadImagen(id, foto);
-                    if (sino)
+                    var foto = await PedirFoto();
+                    await Toast.Make("Cargando imagen").Show();
+                    if (foto != null)
                     {
-                        actividadesService.Invoke();
+                        var sino = await actividadesService.UploadImagen(id, foto);
+                        if (sino)
+                        {
+                            await Toast.Make("Imagen cargada").Show();
+                            actividadesService.Invoke();
+                        }
+                        else
+                        {
+                            await Toast.Make("Error al obtener imagen").Show();
+                        }
                     }
                     else
                     {
                         await Toast.Make("Error al obtener imagen").Show();
                     }
                 }
-                else
-                {
-                    await Toast.Make("Error al obtener imagen").Show();
-                }
+            }
+            else
+            {
+                await Toast.Make("No hay internet").Show();
             }
         }
         async Task<string> PedirFoto()

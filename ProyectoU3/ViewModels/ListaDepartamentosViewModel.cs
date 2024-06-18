@@ -53,6 +53,7 @@ namespace ProyectoU3.ViewModels
                             Toast.Make("Hubo un problema al eliminarlo").Show();
                         }
                         CargarDepartamentos();
+                        await Shell.Current.Navigation.PopAsync();
                     }
                 }
                 else

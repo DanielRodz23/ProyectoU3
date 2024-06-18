@@ -152,7 +152,7 @@ namespace ProyectoU3.Services
 
                 var borradores = await GetMyBorradores();
 
-                if (borradores != null || borradores.FirstOrDefault() != null)
+                if (borradores != null)
                 {
                     foreach (var actividad in borradores)
                     {
@@ -170,6 +170,7 @@ namespace ProyectoU3.Services
                             {
                                 if (actividad.estado == (int)Estado.Eliminado)
                                 {
+                                    entidad.estado = (int)Estado.Eliminado;
                                     ActividadesRepository.Delete(entidad);
                                     aviso = true;
                                 }
@@ -178,6 +179,7 @@ namespace ProyectoU3.Services
 
                                     if (actividad.titulo != entidad.titulo || actividad.descripcion != entidad.descripcion || actividad.estado != entidad.estado || actividad.departamento != entidad.departamento)
                                     {
+                                        entidad = mapper.Map<Actividades>(actividad);
                                         ActividadesRepository.Update(entidad);
                                         aviso = true;
                                     }
@@ -209,28 +211,24 @@ namespace ProyectoU3.Services
 
                         if (entidad == null) //SI no estaba en BD Local, lo agrego
                         {
-                            entidad = mapper.Map<Actividades>(actividad);
-                            ActividadesRepository.Insert(entidad);
+                            //entidad = mapper.Map<Actividades>(actividad);
+                            var act = mapper.Map<Actividades>(actividad);
+                            ActividadesRepository.Insert(act);
                             aviso = true;
                         }
                         else
                         {
                             if (entidad != null)
                             {
-                                if (actividad.estado == (int)Estado.Eliminado)
+
+
+                                if (actividad.titulo != entidad.titulo || actividad.descripcion != entidad.descripcion || actividad.estado != entidad.estado || actividad.departamento != entidad.departamento || actividad.fechaActualizacion != entidad.fechaActualizacion)
                                 {
-                                    ActividadesRepository.Delete(entidad);
+                                    var act = mapper.Map<Actividades>(actividad);
+                                    ActividadesRepository.Update(act);
                                     aviso = true;
                                 }
-                                else
-                                {
 
-                                    if (actividad.titulo != entidad.titulo || actividad.descripcion != entidad.descripcion || actividad.estado != entidad.estado || actividad.departamento != entidad.departamento)
-                                    {
-                                        ActividadesRepository.Update(entidad);
-                                        aviso = true;
-                                    }
-                                }
                             }
                         }
 
