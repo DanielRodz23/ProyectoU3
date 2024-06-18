@@ -240,7 +240,7 @@ namespace ProyectoU3.Services
 
                         _ = MainThread.InvokeOnMainThreadAsync(() =>
                         {
-                            Toast.Make("Actualizado Actividades").Show();
+                            Toast.Make("Actualizando actividades").Show();
                             DatosActualizados?.Invoke();
                         });
                     }

@@ -64,18 +64,22 @@ namespace ProyectoU3.ViewModels
                 //Shell.Current.ToolbarItems.First().IsEnabled = false;
                 //await Shell.Current.GoToAsync("//LoginView");
 
-                App.ActividadesService.ActividadesRepository.DeleteAll();
-                Preferences.Clear();
                 SecureStorage.RemoveAll();
+                Preferences.Clear();
+                App.ActividadesService.ActividadesRepository.DeleteAll();
                 App.Current.MainPage = App.LoginView;
+                App.ActividadesService.ActividadesRepository.DeleteAll();
+
             }
         }
         public void Emrg()
         {
-            App.ActividadesService.ActividadesRepository.DeleteAll();
-            Preferences.Clear();
             SecureStorage.RemoveAll();
+            Preferences.Clear();
+            App.ActividadesService.ActividadesRepository.DeleteAll();
             App.Current.MainPage = App.LoginView;
+            App.ActividadesService.ActividadesRepository.DeleteAll();
+
         }
 
     }

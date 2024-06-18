@@ -1,3 +1,4 @@
+using ProyectoU3.Services;
 using ProyectoU3.ViewModels;
 
 namespace ProyectoU3.Views;
@@ -9,6 +10,15 @@ public partial class ListActividadesView : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+
+        //App.ActividadesService.ActividadesRepository.DeleteAll();
+
+        //var tas = App.ActividadesService.GetAllAsync();
+        //tas.Wait();
+
+        //viewModel.FillList();
+
+
 
         //if (Shell.Current.ToolbarItems.Count == 0)
         //{

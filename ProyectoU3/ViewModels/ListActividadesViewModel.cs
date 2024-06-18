@@ -25,8 +25,12 @@ namespace ProyectoU3.ViewModels
             this.actividadesRepository = actividadesRepository;
             this.detallesViewModel = detallesViewModel;
             this.adminService = adminService;
-            App.ActividadesService.DatosActualizados += ActividadesService_DatosActualizados;
 
+            //CheckThis
+
+            this.actividadesService.GetAllAsync();
+            
+            App.ActividadesService.DatosActualizados += ActividadesService_DatosActualizados;
             FillList();
 
             Thread admincheck = new Thread(CheckAdmin) { IsBackground = true };
@@ -78,7 +82,7 @@ namespace ProyectoU3.ViewModels
         private readonly DepartamentosService adminService;
 
         public ObservableCollection<Actividades> ListaActividades { get; set; } = new();
-        void FillList()
+        public void FillList()
         {
             ListaActividades.Clear();
             var acts = actividadesRepository.GetAll().OrderByDescending(x => x.fechaRealizacion);
